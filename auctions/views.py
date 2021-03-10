@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from .models import Bid,Categories,Listings,Categories, Watchlist, Comment
 from .models import User
-from .forms import ListForm
+from .forms  import ListForm
 from django.contrib.auth.decorators import login_required
 from django.views.generic import CreateView, DetailView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -115,7 +115,7 @@ def category_active_list(request, name):
 
 #############################################################################################################
 @login_required     
-def make_bid(request, listing_id, method=(["GET", "POST"])):
+def make_bid(request, listing_id, method=(["POST"])):
     amount = request.POST["amount"]
     item = Listings.objects.get(pk=listing_id)
 
@@ -125,10 +125,10 @@ def make_bid(request, listing_id, method=(["GET", "POST"])):
         new_bid.save()
 
         # Update the current price of the item, and the current winner
-        item.highest_bid = float(amount)
-        item.Winner = request.user
+        item.highest_bid = amount
+        item.winner = request.user
         item.save()
-
+        
         return HttpResponseRedirect(reverse("index"))
 
 

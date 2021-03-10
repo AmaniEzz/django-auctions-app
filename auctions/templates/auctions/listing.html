@@ -24,7 +24,7 @@
 
               <p class="card-text"> <strong>Starting Bid:</strong> ${{ listing.starting_bid }}</p>
               <p class="card-text"> <strong>Current highest bid:</strong> ${{ listing.highest_bid }}</p>
-              <p class="card-text"> <strong>Bidder:</strong> <code>@{{ listing.Winner }}</code></p>
+              <p class="card-text"> <strong>Bidder:</strong> <code>@{{ listing.winner }}</code></p>
 
           <div >
               <a href="{% url 'close_auction' listing.id %}" type="submit" role="button" class="btn btn-primary">Close Auction</a>
@@ -64,21 +64,21 @@
 
 {% elif user.is_authenticated and listing.active == 0 %}
 <div class="listing_footer">
-    {% if user == listing.Winner %}
+    {% if user == listing.winner %}
         <div class="alert alert-success" style="text-align: center" role="alert">
             Auction closed. You win!
         </div>
-    {% elif user == listing.seller and listing.Winner == None %}
+    {% elif user == listing.seller and listing.winner == None %}
         <div class="alert alert-success" style="text-align: center" role="alert">
           <p  class="alert-heading">Auction closed with no winner!</p>
             <div>
               <a href="{% url 'reopen_auction' listing.id %}" type="submit" role="button" class="btn btn-primary btn-sm">Reopen Auction</a>
             </div>
         </div>
-    {% elif user == listing.seller and listing.Winner != None %}
+    {% elif user == listing.seller and listing.winner != None %}
     <div class="alert alert-success" style="text-align: center;" role="alert">
       <h4 class="alert-heading">Auction Closed!</h4>
-      <p class="mb-0">Winner is : @{{listing.Winner}}</p>
+      <p class="mb-0">Winner is : @{{listing.winner}}</p>
       <p class="mb-0">Price is : ${{listing.highest_bid}}</p>
 
   </div>
@@ -100,9 +100,9 @@
             <div class="card-body" > 
               <h4 style="padding-bottom: 20px;font-size: x-large;" class="card-title"> {{ listing.title }}</h4>
               <div class="card-text">Seller: <strong> {{ listing.seller }}</strong> </div>
-              {% if listing.Winner !=  None %}
+              {% if listing.winner !=  None %}
                   <div class="card-text">Highest bid:<strong>  ${{ listing.highest_bid }}</strong></div> 
-              {% elif listing.Winner ==  None %}
+              {% elif listing.winner ==  None %}
                   <div class="card-text">Highest bid:<strong>  ${{ listing.starting_bid }}</strong></div> 
               {% endif %}
 
@@ -114,21 +114,19 @@
           <form action="{% url 'make_bid' listing.id %}" method="POST" class="column" style="margin-right: 60px;">
             {% csrf_token %}
             <div style="color: rgba(10, 10, 10, 0.692);"> <h4 > Place a Bid </h4> </div>
-            {% if listing.Winner !=  None %}
+            {% if listing.winner !=  None %}
             <span  style="color: rgba(75, 84, 94, 0.74);font-size: 12px;font-family: Verdana, Geneva, Tahoma, sans-serif;"> 
               bid must be greater than the highest bid ${{ listing.highest_bid }}
             </span> 
             <div style="padding: 12px 0 10px 0;" >
-              <input style="width: 100%;padding: 5px;" class="form-control form-control-sm" type="number" name="amount" min="{{ listing.highest_bid }}"  placeholder="{{ listing.highest_bid }}" step="0.01" oninput="setTwoNumberDecimal">
-              
+              <input style="width: 100%;padding: 5px;" class="form-control form-control-sm" type="number" name="amount" min="{{ listing.highest_bid }}"  placeholder="{{ listing.highest_bid }}" step="0.01" oninput="setTwoNumberDecimal">              
             </div> 
-            {% elif listing.Winner ==  None %}
+            {% elif listing.winner ==  None %}
             <span  style="color: rgba(75, 84, 94, 0.74);font-size: 12px;font-family: Verdana, Geneva, Tahoma, sans-serif;"> 
               bid must be greater than the highest bid ${{ listing.starting_bid }}
             </span>
             <div style="padding: 12px 0 10px 0;" >
-              <input style="width: 100%;padding: 5px;" class="form-control form-control-sm" type="number" name="amount" min="{{ listing.starting_bid }}"  placeholder="{{ listing.starting_bid }}" step="0.01" oninput="setTwoNumberDecimal">
-           </div>
+              <input style="width: 100%;padding: 5px;" class="form-control form-control-sm" type="number" name="amount" min="{{ listing.starting_bid }}"  placeholder="{{ listing.starting_bid }}" step="0.01" oninput="setTwoNumberDecimal">           </div>
             {% endif %}
           
             <div >  
