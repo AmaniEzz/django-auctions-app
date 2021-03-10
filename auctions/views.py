@@ -82,7 +82,6 @@ def register(request):
 
 
 #############################################################################################################
-@login_required     
 def listingpage(request, listing_id):
     # retrive all comment under this listing
     context = {"listing": Listings.objects.get(pk=listing_id),
