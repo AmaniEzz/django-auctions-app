@@ -90,7 +90,7 @@ DATABASES = {
 
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 
-        'NAME': 'Auctions',
+        'NAME': 'newdatabase',
 
         'USER': 'myprojectuser',
 
