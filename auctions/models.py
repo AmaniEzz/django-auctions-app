@@ -39,7 +39,7 @@ class Listings(models.Model):
     category     = models.ForeignKey(Categories, on_delete=models.CASCADE, related_name="category")
     image        = models.ImageField(upload_to='images/')
     created_at   = models.DateTimeField(auto_now_add=True)
-    winner       = models.ForeignKey(User, on_delete=models.CASCADE,blank=True, related_name="winner", null=True)
+    Winner       = models.ForeignKey(User, on_delete=models.CASCADE,blank=True, related_name="winner", null=True)
     active       = models.BooleanField(default=True)
     comment      = models.ManyToManyField(Comment, blank=True)
 

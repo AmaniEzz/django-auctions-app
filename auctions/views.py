@@ -126,10 +126,10 @@ def make_bid(request, listing_id, method=(["POST"])):
 
         # Update the current price of the item, and the current winner
         item.highest_bid = amount
-        item.winner = request.user
+        item.Winner = request.user
         item.save()
         
-        return HttpResponseRedirect(reverse("index"))
+    return HttpResponseRedirect(reverse('listingpage', args=[listing_id]))
 
 
 @login_required 
