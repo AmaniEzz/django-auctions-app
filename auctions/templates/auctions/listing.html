@@ -68,6 +68,11 @@
         <div class="alert alert-success" style="text-align: center" role="alert">
             Auction closed. You win!
         </div>
+    {% elif user != listing.Winner  and  user != listing.seller %}
+        <div class="alert alert-success" style="text-align: center" role="alert">
+            Sorry you missed out! <br>
+            This auction is closed
+        </div>
     {% elif user == listing.seller and listing.Winner == None %}
         <div class="alert alert-success" style="text-align: center" role="alert">
           <p  class="alert-heading">Auction closed with no Winner!</p>
@@ -195,7 +200,7 @@
   {% endif %}
 
 
-  {% if user.is_authenticated == 0 and listing.active %}
+  {% if user.is_authenticated == 0 %}
 <div id="container">
   <div class="row">
     <div class="column">
