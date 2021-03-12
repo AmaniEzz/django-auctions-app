@@ -49,7 +49,7 @@
       {% for comment in comment_list %}
     <div class="card card_comment" style="padding: 0; width: 720px">
         <div class="card-header">
-             Comment by: {{ comment.commenter }}
+            Comment by: <code> {{ comment.commenter }}</code>  
         </div>
      <div class="card-body">
          <blockquote class="blockquote mb-0">
@@ -83,7 +83,7 @@
     {% elif user == listing.seller and listing.Winner != None %}
     <div class="alert alert-success" style="text-align: center;" role="alert">
       <h4 class="alert-heading">Auction Closed!</h4>
-      <p class="mb-0">Winner is : @{{listing.Winner}}</p>
+      <p class="mb-0">Winner is : <code>@{{listing.Winner}}</code></p>
       <p class="mb-0">Price is : ${{listing.highest_bid}}</p>
 
   </div>
@@ -104,7 +104,7 @@
         <div class="row1">
             <div class="card-body" > 
               <h4 style="padding-bottom: 20px;font-size: x-large;" class="card-title"> {{ listing.title }}</h4>
-              <div class="card-text">Seller: <strong> {{ listing.seller }}</strong> </div>
+              <div class="card-text">Seller: <code>@{{ listing.seller }}</code> </div>
               {% if listing.Winner !=  None %}
                   <div class="card-text">Highest bid:<strong>  ${{ listing.highest_bid }}</strong></div> 
               {% elif listing.Winner ==  None %}
@@ -185,7 +185,7 @@
     {% for comment in comment_list %}
   <div class="card card_comment" style="padding: 0; width: 720px">
       <div class="card-header">
-           Comment by: {{ comment.commenter }}
+        Comment by: <code> {{ comment.commenter }}</code>  
       </div>
    <div class="card-body">
        <blockquote class="blockquote mb-0">
@@ -212,7 +212,7 @@
         <div class="row1">
             <div class="card-body" > 
               <h4 style="padding-bottom: 20px;font-size: x-large;" class="card-title"> {{ listing.title }}</h4>
-              <div class="card-text">Seller: <strong> {{ listing.seller }}</strong> </div>
+              <div class="card-text">Seller: <code>@{{ listing.seller }}</code> </div>
               {% if listing.Winner !=  None %}
                   <div class="card-text">Highest bid:<strong>  ${{ listing.highest_bid }}</strong></div> 
               {% elif listing.Winner ==  None %}
@@ -267,7 +267,7 @@
     {% for comment in comment_list %}
   <div class="card card_comment" style="padding: 0; width: 720px">
       <div class="card-header">
-           Comment by: {{ comment.commenter }}
+        Comment by: <code> {{ comment.commenter }}</code>  
       </div>
    <div class="card-body">
        <blockquote class="blockquote mb-0">
