@@ -49,7 +49,7 @@
       {% for comment in comment_list %}
     <div class="card card_comment" style="padding: 0; width: 720px">
         <div class="card-header">
-            Comment by: <code> {{ comment.commenter }}</code>  
+            Comment by: <code>  @{{ comment.commenter }}</code>  
         </div>
      <div class="card-body">
          <blockquote class="blockquote mb-0">
@@ -185,7 +185,7 @@
     {% for comment in comment_list %}
   <div class="card card_comment" style="padding: 0; width: 720px">
       <div class="card-header">
-        Comment by: <code> {{ comment.commenter }}</code>  
+        Comment by: <code>  @{{ comment.commenter }}</code>  
       </div>
    <div class="card-body">
        <blockquote class="blockquote mb-0">
@@ -267,7 +267,7 @@
     {% for comment in comment_list %}
   <div class="card card_comment" style="padding: 0; width: 720px">
       <div class="card-header">
-        Comment by: <code> {{ comment.commenter }}</code>  
+        Comment by: <code>  @{{ comment.commenter }}</code>  
       </div>
    <div class="card-body">
        <blockquote class="blockquote mb-0">
