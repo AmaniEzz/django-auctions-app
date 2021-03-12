@@ -6,7 +6,9 @@
 {% if user.is_authenticated %}
 
 {% if message %}
-{{message}}
+<row>
+    <h3 style="margin: 20px;">{{message}}</h3
+</row>
 {% endif %}
 
 
@@ -15,7 +17,7 @@
         <h2>Your WatchList</h2>
     </div>
     <section class="row" style="margin-left: 20px;">
-        {% for Listing in object_list%}
+    {% for Listing in object_list%}
             <article class="watchlist_card">
                 <a href="{% url 'listingpage' Listing.pk %}">
                      <img class="card-img-top" src="{{ Listing.image.url  }}" alt="Card image cap">
@@ -26,13 +28,9 @@
                   <p class="card-subtitle mb-2 text-muted" style="font-size: smaller;"> Created {{ Listing.created_at }}</p>
                 </div>
             </article>
-            {% empty %}
-    <li>No item yet.</li>
-    
     </section>    
 </div>  
    
-
 {% endfor %}
 
 {% else %}
