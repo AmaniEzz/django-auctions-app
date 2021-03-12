@@ -156,13 +156,8 @@ def reopen_auction(request, listing_id):
 
 @login_required
 def watchlist_page(request):
-    # retrive all comment under this listing
-    if (Watchlist.objects.get(user=request.user).listing).exists():
-        context = {"object_list": (Watchlist.objects.get(user=request.user).listing).all()}
-        return render(request, "auctions/watchlist_list.html", context = context )   
-    else:
-        return render(request, "auctions/watchlist_list.html", context = {'message': 'No item yet.'} )   
-
+    context = {"object_list": Watchlist.objects.filter(user=request.user)}
+    return render(request, "auctions/watchlist_list.html", context = context )   
 
 @login_required
 def add_to_wishlist(request, product_id):
