@@ -155,9 +155,13 @@ def reopen_auction(request, listing_id):
 
 @login_required
 def watchlist_page(request):
-    user_watchlist =  Watchlist.objects.get(user=request.user)
-    context = {"object_list": user_watchlist.listing.all()}
-    return render(request, "auctions/watchlist_list.html", context = context )   
+    if Watchlist.objects.filter(user=request.user).exists():
+        user_cart = Watchlist.objects.get(user=request.user)
+        context = {"user_items": user_cart.listing.all(),
+        }
+        return render(request, 'auctions/watchlist_list.html', context=context)
+    else:
+        return render(request, 'auctions/watchlist_list.html', context = {"message": 'Your watchlist is empty!'} )   
 
 @login_required
 def add_to_wishlist(request, product_id):
@@ -191,10 +195,15 @@ def add_comment(request, listing_id):
 
 @login_required()
 def cart_detail(request):
-    user_cart = Cart.objects.get(user=request.user)
-    context = {"user_items": user_cart.listing.all(),
-    }
-    return render(request, 'auctions/cart_detail.html', context=context)
+    if Cart.objects.filter(user=request.user).exists():
+        user_cart = Cart.objects.get(user=request.user)
+        context = {"user_items": user_cart.listing.all(),
+        }
+        return render(request, 'auctions/cart_detail.html', context=context)
+    else:
+        return render(request, 'auctions/cart_detail.html', context = {"message": 'Shopping cart is empty!'})
+
+
 
 
 @login_required()

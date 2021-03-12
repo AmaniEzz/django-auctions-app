@@ -65,7 +65,7 @@ class Bid(models.Model):
 # Table to store the watchlist for each user
 class Watchlist(models.Model):
     user      = models.ForeignKey(User, on_delete=models.CASCADE)
-    listing   = models.ManyToManyField(Listings)
+    listing   = models.ManyToManyField(Listings, blank=True, related_name="user_fav")
 
     def __str__(self):
        return f"{self.user}'s WatchList"
@@ -73,7 +73,7 @@ class Watchlist(models.Model):
 # Table to store the watchlist for each user
 class Cart(models.Model):
     user      = models.ForeignKey(User, on_delete=models.CASCADE)
-    listing   = models.ManyToManyField(Listings)
+    listing   = models.ManyToManyField(Listings, blank=True)
 
     def __str__(self):
        return f"{self.user}'s Cart"

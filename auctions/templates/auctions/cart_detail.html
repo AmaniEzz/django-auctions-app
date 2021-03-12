@@ -3,11 +3,21 @@
 
 {% block body %}
 
+
+
 <div class="shopping-cart">
+
+{% if message %}
+    <div class="title">
+      <h3>{{ message }}</h3>
+    </div>
+{% else %}
+
     <!-- Title -->
     <div class="title">
       Shopping Bag
     </div>
+
   {% for listing in user_items %}
 
     <!-- Product #1 -->
@@ -29,9 +39,9 @@
 
       <div class="total-price" id="column4s">${{ listing.starting_bid }}</div>
     </div>
-    {% empty %}
-    <li>No item yet.</li>
-    {% endfor %}
 
+    {% endfor %}
   </div>
+  {% endif %}
+
 {% endblock %}
