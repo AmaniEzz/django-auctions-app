@@ -45,11 +45,11 @@
 
   <div class="row">
     <div>
-      <h3 style="padding-bottom: 10px;"> Recent Comments</h3>
+      <h2 style="padding-bottom: 10px;"> Recent Comments</h2>
       {% for comment in comment_list %}
-    <div class="card card_comment" style="padding: 0;">
+    <div class="card card_comment" style="padding: 0; width: 720px">
         <div class="card-header">
-          <div> Comment by: <code style="font-size: 15px;">@{{ comment.commenter }}</code></div>
+             Comment by: {{ comment.commenter }}
         </div>
      <div class="card-body">
          <blockquote class="blockquote mb-0">
@@ -180,10 +180,10 @@
 <hr style="background-color: rgb(156, 156, 156, 0.4); margin: 20px 25px 0px 25px;">
 
 <div class="row">
-  <h2> Recent Comments</h2>
   <div>
+    <h2 style="padding-bottom: 10px;"> Recent Comments</h2>
     {% for comment in comment_list %}
-  <div class="card card_comment" style="padding: 0;">
+  <div class="card card_comment" style="padding: 0; width: 720px">
       <div class="card-header">
            Comment by: {{ comment.commenter }}
       </div>
@@ -262,10 +262,10 @@
 <hr style="background-color: rgb(156, 156, 156, 0.4); margin: 20px 25px 0px 25px;">
 
 <div class="row">
-  <h2> Recent Comments</h2>
   <div>
+    <h2 style="padding-bottom: 10px;"> Recent Comments</h2>
     {% for comment in comment_list %}
-  <div class="card card_comment" style="padding: 0;">
+  <div class="card card_comment" style="padding: 0; width: 720px">
       <div class="card-header">
            Comment by: {{ comment.commenter }}
       </div>

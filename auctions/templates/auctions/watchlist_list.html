@@ -9,7 +9,7 @@
     <div style="text-align: center;">
         <h2>Your WatchList</h2>
     </div>
-    <section class="row" style="margin-left: 5px; justify-content: center;">
+    <section class="row" style="margin-left: 20px;">
         {% for Listing in object_list%}
             <article class="watchlist_card">
                 <a href="{% url 'listingpage' Listing.pk %}">
@@ -17,7 +17,7 @@
                 </a>
                 <div class="card-body" style="padding: 15px;">
                   <p class="card-title"><strong> {{ Listing.title }} </strong></p>
-                  <p class="card-subtitle mb-2 "  style="font-size: small;"> Current Price:</strong> {{ Listing.starting_bid }}$</p>
+                  <p class="card-subtitle mb-2 "  style="font-size: small;"> Current Price:<strong> ${{ Listing.starting_bid }}</strong></p>
                   <p class="card-subtitle mb-2 text-muted" style="font-size: smaller;"> Created {{ Listing.created_at }}</p>
                 </div>
             </article>
