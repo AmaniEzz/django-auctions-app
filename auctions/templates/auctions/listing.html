@@ -94,7 +94,7 @@
 
 {% if user.is_authenticated and listing.active and user != listing.seller %}
 <div id="container">
-  <div class="row">
+  <div class="row" style="padding-left: 80px;">
     <div class="column">
           <img class="column_card" src="{{ listing.image.url }}" alt="Card image cap" ><br>
     </div>
