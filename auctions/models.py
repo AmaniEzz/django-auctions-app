@@ -27,9 +27,6 @@ class Comment(models.Model):
         return f"{self.comment}"
 
 
-class Newtable(models.Model):
-    pass
-
 # Table of all Listings in website
 class Listings(models.Model):
     seller        = models.ForeignKey(User, on_delete=models.CASCADE, related_name="seller")
