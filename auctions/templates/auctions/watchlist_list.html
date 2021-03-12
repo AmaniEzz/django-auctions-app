@@ -7,16 +7,17 @@
 
 <div style="padding: 40px 0 20px 0;">
     <div style="text-align: center;">
+    
     {% if message %}
     <div class="title">
       <h3>{{ message }}</h3>
     </div>
     {% else %}
-        <h2>Your WatchList</h2>
 
-    </div>
+      <h2>Your WatchList</h2>
+
     <section class="row" style="margin-left: 5px;">
-        {% for Listing in object_list %}
+        {% for Listing in user_items %}
             <article class="watchlist_card">
                 <a href="{% url 'listingpage' Listing.pk %}">
                      <img class="card-img-top" src="{{ Listing.image  }}" alt="Card image cap">
@@ -27,8 +28,8 @@
                   <p class="card-subtitle mb-2 text-muted" style="font-size: smaller;"> Created {{ Listing.created_at }}</p>
                 </div>
             </article>
+            {% endfor %}
     </section>  
-    {% endfor %}
 </div>  
 {% endif %}
 {% endif %}

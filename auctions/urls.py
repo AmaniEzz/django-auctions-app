@@ -24,6 +24,7 @@ urlpatterns = [
     path('cart/add/<int:product_id>/', views.cart_add, name='cart_add'),
     path('cart/cart-detail/',views.cart_detail,name='cart_detail'),
 
+
 ]
 
 if settings.DEBUG: 

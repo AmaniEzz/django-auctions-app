@@ -156,8 +156,8 @@ def reopen_auction(request, listing_id):
 @login_required
 def watchlist_page(request):
     if Watchlist.objects.filter(user=request.user).exists():
-        user_cart = Watchlist.objects.get(user=request.user)
-        context = {"user_items": user_cart.listing.all(),
+        user_watchlist = Watchlist.objects.get(user=request.user)
+        context = {"user_items": user_watchlist.listing.all(),
         }
         return render(request, 'auctions/watchlist_list.html', context=context)
     else:
