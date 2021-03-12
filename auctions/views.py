@@ -3,7 +3,7 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from .models import Bid,Categories,Listings,Categories, Watchlist, Comment
+from .models import Bid,Categories,Listings,Categories, Watchlist, Comment, Cart
 from .models import User
 from .forms  import ListForm
 from django.contrib.auth.decorators import login_required
@@ -11,7 +11,6 @@ from django.views.generic import CreateView, DetailView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.contrib.messages import add_message, ERROR,SUCCESS
-from cart.cart import Cart
 
 
 #############################################################################################################
@@ -156,7 +155,8 @@ def reopen_auction(request, listing_id):
 
 @login_required
 def watchlist_page(request):
-    context = {"object_list": Watchlist.objects.filter(user=request.user)}
+    user_watchlist =  Watchlist.objects.get(user=request.user)
+    context = {"object_list": user_watchlist.listing.all()}
     return render(request, "auctions/watchlist_list.html", context = context )   
 
 @login_required
@@ -188,47 +188,27 @@ def add_comment(request, listing_id):
 #############################################################################################################
 ############################################# Add to cart views ############################################
 
-@login_required()
-def cart_add(request, id):
-    cart = Cart(request)
-    product = Listings.objects.get(pk=id)
-    cart.add(product=product)
-    return redirect("index")
-
-
-@login_required()
-def item_clear(request, id):
-    cart = Cart(request)
-    product = Listings.objects.get(pk=id)
-    cart.remove(product)
-    return redirect("cart_detail")
-
-
-@login_required()
-def item_increment(request, id):
-    cart = Cart(request)
-    product = Listings.objects.get(pk=id)
-    cart.add(product=product)
-    return redirect("cart_detail")
-
-
-@login_required()
-def item_decrement(request, id):
-    cart = Cart(request)
-    product = Listings.objects.get(pk=id)
-    cart.decrement(product=product)
-    return redirect("cart_detail")
-
-
-@login_required()
-def cart_clear(request):
-    cart = Cart(request)
-    cart.clear()
-    return redirect("cart_detail")
-
 
 @login_required()
 def cart_detail(request):
-    context = {"listing": Listings.objects.all(),
+    user_cart = Cart.objects.get(user=request.user)
+    context = {"user_items": user_cart.listing.all(),
     }
     return render(request, 'auctions/cart_detail.html', context=context)
+
+
+@login_required()
+def cart_add(request, product_id):
+    item_to_save = Listings.objects.get(pk=product_id)
+
+    # Check if the item already exists in that user Cart
+    if Cart.objects.filter(user=request.user, listing=product_id).exists():
+        add_message(request, ERROR, "You already have it in your cart.")
+        return HttpResponseRedirect(reverse("cart_detail"))
+
+    # Add the item through the ManyToManyField (Cart => item)
+    else:
+        user_cart, created = Cart.objects.get_or_create(user=request.user)
+        user_cart.listing.add(item_to_save)
+        add_message(request, SUCCESS, "Successfully added to your cart")
+        return HttpResponseRedirect(reverse("cart_detail"))

@@ -7,3 +7,5 @@ admin.site.register(Comment)
 admin.site.register(Listings)
 admin.site.register(Bid)
 admin.site.register(Watchlist)
+admin.site.register(Cart)
+

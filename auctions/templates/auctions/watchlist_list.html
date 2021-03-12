@@ -9,8 +9,8 @@
     <div style="text-align: center;">
         <h2>Your WatchList</h2>
     </div>
-    <section class="row" style="margin-left: 5px; justify-content: center;">
-        {% for Listing in object_list %}
+    <section class="row" style="margin-left: 5px;">
+        {% for Listing in object_list%}
             <article class="watchlist_card">
                 <a href="{% url 'listingpage' Listing.pk %}">
                      <img class="card-img-top" src="{{ Listing.image  }}" alt="Card image cap">
@@ -22,13 +22,18 @@
                 </div>
             </article>
             {% empty %}
-    <h4>is empty!</h4>
+    <li>No item yet.</li>
     
     </section>    
 </div>  
    
 
 {% endfor %}
-{% endif %}
 
+{% else %}
+    <div class="alert alert-danger" role="alert">
+        Not signed in.
+    </div>
+{% endif %}
+        
 {% endblock %}

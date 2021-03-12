@@ -8,7 +8,7 @@
     <div class="title">
       Shopping Bag
     </div>
-  {% for listing in listing %}
+  {% for listing in user_items %}
 
     <!-- Product #1 -->
     <div class="item">
@@ -20,7 +20,7 @@
       </div>
    
       <div class="image" id="column2">
-        <img src="{{listing.image}}" alt="" style="width: 100px; height: 100px; margin: 0;"/>
+        <img src="{{ listing.image }}" alt="" style="width: 100px; height: 100px; margin: 0;"/>
       </div>
    
       <div class="description" id="column3">
@@ -29,6 +29,8 @@
 
       <div class="total-price" id="column4s">${{ listing.starting_bid }}</div>
     </div>
+    {% empty %}
+    <li>No item yet.</li>
     {% endfor %}
 
   </div>

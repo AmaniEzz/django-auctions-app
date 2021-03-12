@@ -21,11 +21,7 @@ urlpatterns = [
     path("close/<int:listing_id>", views.close_auction, name="close_auction"),
     path("reopen_auction/<int:listing_id>", views.reopen_auction, name="reopen_auction"),
     path("add_comment/<int:listing_id>", views.add_comment, name="add_comment"),
-    path('cart/add/<int:id>/', views.cart_add, name='cart_add'),
-    path('cart/item_clear/<int:id>/', views.item_clear, name='item_clear'),
-    path('cart/item_increment/<int:id>/',views.item_increment, name='item_increment'),
-    path('cart/item_decrement/<int:id>/', views.item_decrement, name='item_decrement'),
-    path('cart/cart_clear/', views.cart_clear, name='cart_clear'),
+    path('cart/add/<int:product_id>/', views.cart_add, name='cart_add'),
     path('cart/cart-detail/',views.cart_detail,name='cart_detail'),
 
 ]
