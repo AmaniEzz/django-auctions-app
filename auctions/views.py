@@ -86,7 +86,9 @@ def listingpage(request, listing_id):
     context = {"listing": Listings.objects.get(pk=listing_id),
                "user": request.user, 
                "bids": Bid.objects.filter(listingid=listing_id),
-               "comment_list": (Listings.objects.get(pk=listing_id).comment).all()}
+               "comment_list": (Listings.objects.get(pk=listing_id).comment).all(),
+               "min_starting_bid": (Listings.objects.get(pk=listing_id).starting_bid)+1 ,
+               "min_bid": (Listings.objects.get(pk=listing_id).highest_bid)+1 }
     return render(request, "auctions/listing.html", context = context )   
 
 class CreateListing(LoginRequiredMixin, CreateView):
