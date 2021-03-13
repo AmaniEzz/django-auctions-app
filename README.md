@@ -15,7 +15,7 @@ An eBay-like e-commerce auction site that allow users to:
 
 ## Technology stack
 
-#### Django 3.0.3
-#### PostgreSQL 12
-#### Heroku deployment
+### Django 3.0.3
+### PostgreSQL 12
+### Heroku deployment
 
