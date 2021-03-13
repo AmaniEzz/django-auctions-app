@@ -69,11 +69,3 @@ class Watchlist(models.Model):
 
     def __str__(self):
        return f"{self.user}'s WatchList"
-
-# Table to store the watchlist for each user
-class Cart(models.Model):
-    user      = models.ForeignKey(User, on_delete=models.CASCADE)
-    listing   = models.ManyToManyField(Listings, blank=True)
-
-    def __str__(self):
-       return f"{self.user}'s Cart"

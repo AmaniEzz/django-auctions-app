@@ -210,3 +210,40 @@ label.requiredField {
 .listing_footer {
   margin: 100px auto;
 }
+.box {
+  width: 200px;
+  height: 50px;
+  background-color: rgba(114, 218, 166, 0.5);
+  color: rgb(31, 30, 30);
+  padding: 5px 10px 0px 10px;
+  border-radius: 8px;
+  position: relative;
+  margin: 0px;
+  float: left;
+}
+
+.box.arrow-top {
+  margin-top: 20px;
+}
+
+.box.arrow-top:after {
+  content: " ";
+  position: absolute;
+  right: 30px;
+  top: -15px;
+  border-top: none;
+  border-right: 15px solid transparent;
+  border-left: 15px solid transparent;
+  border-bottom: 15px solid   rgba(114, 218, 166, 0.5);
+}
+
+.box.arrow-right:after {
+  content: " ";
+  position: absolute;
+  right: -15px;
+  top: 15px;
+  border-top: 15px solid transparent;
+  border-right: none;
+  border-left: 15px solid  rgba(114, 218, 166, 0.5);
+  border-bottom: 15px solid transparent;
+}

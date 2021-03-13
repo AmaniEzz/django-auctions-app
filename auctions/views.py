@@ -3,7 +3,7 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from .models import Bid,Categories,Listings,Categories, Watchlist, Comment, Cart
+from .models import Bid,Categories,Listings,Categories, Watchlist, Comment
 from .models import User
 from .forms  import ListForm
 from django.contrib.auth.decorators import login_required
@@ -11,7 +11,7 @@ from django.views.generic import CreateView, DetailView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.contrib.messages import add_message, ERROR,SUCCESS
-
+from .cart import Cart
 
 #############################################################################################################
 
@@ -135,13 +135,6 @@ def make_bid(request, listing_id, method=(["POST"])):
 def view_winner(request, listing_id):
     pass
 
-@login_required
-def close_auction(request, listing_id):
-    item = Listings.objects.get(pk=listing_id)
-    item.active = False
-    item.save()
-    return HttpResponseRedirect(reverse('listingpage', args=[listing_id]))
-
      
 @login_required
 def reopen_auction(request, listing_id):
@@ -155,11 +148,27 @@ def reopen_auction(request, listing_id):
 
 @login_required
 def watchlist_page(request):
-    if Watchlist.objects.filter(user=request.user).exists():
-        user_watchlist = Watchlist.objects.get(user=request.user)
-        context = {"user_items": user_watchlist.listing.all(),
-        }
-        return render(request, 'auctions/watchlist_list.html', context=context)
+
+    #check if user has items in their watchlist
+    if Watchlist.objects.filter(user=request.user):
+
+            # query all items in user watchlist
+            user_items = Watchlist.objects.get(user=request.user)
+            user_watchlist = []
+            for item in user_items.listing.all():
+
+                # only return items that are active and not been won by the user
+                if item.active:
+                    user_watchlist.append(item)
+                
+            context = {"user_items":user_watchlist,
+            }
+
+            if user_watchlist:
+                return render(request, 'auctions/watchlist_list.html', context=context)
+            else:
+                return render(request, 'auctions/watchlist_list.html', context = {"message": 'Your watchlist is empty!'} )   
+        
     else:
         return render(request, 'auctions/watchlist_list.html', context = {"message": 'Your watchlist is empty!'} )   
 
@@ -170,7 +179,7 @@ def add_to_wishlist(request, product_id):
     # Check if the item already exists in that user watchlist
     if Watchlist.objects.filter(user=request.user, listing=product_id).exists():
         add_message(request, ERROR, "You already have it in your watchlist.")
-        return HttpResponseRedirect(reverse("watchlist_page"))
+        return HttpResponseRedirect(reverse('listingpage', args=[product_id]))
 
     # Add the item through the ManyToManyField (Watchlist => item)
     else:
@@ -178,8 +187,19 @@ def add_to_wishlist(request, product_id):
         user_list.listing.add(item_to_save)
         #print((Watchlist.objects.get(user=request.user).listing).all())
         add_message(request, SUCCESS, "Successfully added to your watchlist")
-        return HttpResponseRedirect(reverse("watchlist_page"))
+        return HttpResponseRedirect(reverse('listingpage', args=[product_id]))
 
+
+@login_required
+def Winlist(request):
+    if Listings.objects.filter(Winner=request.user):
+        user_winlist = Listings.objects.filter(Winner=request.user, active=False)
+        print(Listings.objects.filter(Winner=request.user))
+        context = {"user_winlist": user_winlist,
+        }
+        return render(request, 'auctions/winlist.html', context=context)
+    else:
+        return render(request, 'auctions/winlist.html', context = {"message": 'Your winlist is empty!'} )   
 
 #############################################################################################################
 @login_required
@@ -189,35 +209,47 @@ def add_comment(request, listing_id):
     new_comment = getListing.comment.create(comment=comment, listingid=getListing, commenter=request.user)
     return HttpResponseRedirect(reverse('listingpage', args=[listing_id]))
 
+
 #############################################################################################################
 ############################################# Add to cart views ############################################
 
+@login_required(login_url="/users/login")
+def cart_add(request, id):
+    cart = Cart(request)
+    product = Listings.objects.get(pk=id)
+    cart.add(product=product, winner=product.Winner)
+    return redirect("cart_detail")
 
-@login_required()
+@login_required(login_url="/users/login")
+def item_clear(request, id):
+    cart = Cart(request)
+    product = Listings.objects.get(pk=id)
+    cart.remove(product)
+    return redirect("cart_detail")
+
+@login_required(login_url="/users/login")
+def cart_clear(request):
+    cart = Cart(request)
+    cart.clear()
+    return redirect("cart_detail")
+
+@login_required(login_url="/users/login")
 def cart_detail(request):
-    if Cart.objects.filter(user=request.user).exists():
-        user_cart = Cart.objects.get(user=request.user)
-        context = {"user_items": user_cart.listing.all(),
-        }
-        return render(request, 'auctions/cart_detail.html', context=context)
-    else:
-        return render(request, 'auctions/cart_detail.html', context = {"message": 'Shopping cart is empty!'})
+    return render(request, 'auctions/cart_detail.html')
 
 
 
+@login_required
+def close_auction(request, listing_id):
+    item = Listings.objects.get(pk=listing_id)
+    item.active = False
+    item.save()
 
-@login_required()
-def cart_add(request, product_id):
-    item_to_save = Listings.objects.get(pk=product_id)
+    # Remove item from winner's watchlist if exists
+    if Watchlist.objects.filter(user=request.user, listing=listing_id).exists():
+            watchlist = Watchlist(user=item.Winner)
+            item_todelet =   get_object_or_404(Watchlist, listing=listing_id)
+            watchlist.listing.remove(item_todelet)
 
-    # Check if the item already exists in that user Cart
-    if Cart.objects.filter(user=request.user, listing=product_id).exists():
-        add_message(request, ERROR, "You already have it in your cart.")
-        return HttpResponseRedirect(reverse("cart_detail"))
 
-    # Add the item through the ManyToManyField (Cart => item)
-    else:
-        user_cart, created = Cart.objects.get_or_create(user=request.user)
-        user_cart.listing.add(item_to_save)
-        add_message(request, SUCCESS, "Successfully added to your cart")
-        return HttpResponseRedirect(reverse("cart_detail"))
+    return HttpResponseRedirect(reverse('listingpage', args=[listing_id]))

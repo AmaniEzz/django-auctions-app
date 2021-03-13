@@ -1,4 +1,6 @@
 {% load static %}
+{% load cart_tag %}
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +48,14 @@
             </li>
             {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link {% if active == 'watchlist' %} active {% endif %}" href="{% url 'watchlist_page' %}">WatchList
+                    <a class="nav-link" href="{% url 'watchlist_page' %}">WatchList
+                        {% if count != 0 %}
+                            <span class="badge badge-secondary">{{ count }}</span>
+                        {% endif %}
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'Winlist' %}">Winlist
                         {% if count != 0 %}
                             <span class="badge badge-secondary">{{ count }}</span>
                         {% endif %}

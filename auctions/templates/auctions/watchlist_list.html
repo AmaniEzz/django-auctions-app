@@ -23,7 +23,7 @@
                      <img class="card-img-top" src="{{ Listing.image  }}" alt="Card image cap">
                 </a>
                 <div class="card-body" style="padding: 15px;">
-                  <p class="card-title"><strong> {{ Listing.title }} </strong></p>
+                  <p class="card-title"><strong> {{ Listing.title|truncatewords:10}} </strong></p>
                   <p class="card-subtitle mb-2 "  style="font-size: small;"> Current Price:</strong> {{ Listing.starting_bid }}$</p>
                   <p class="card-subtitle mb-2 text-muted" style="font-size: smaller;"> Created {{ Listing.created_at }}</p>
                 </div>
