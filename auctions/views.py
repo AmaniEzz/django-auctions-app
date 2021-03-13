@@ -192,7 +192,8 @@ def add_to_wishlist(request, product_id):
 
 @login_required
 def Winlist(request):
-    if Listings.objects.filter(Winner=request.user):
+    
+    if Listings.objects.filter(Winner=request.user, active=False):
         user_winlist = Listings.objects.filter(Winner=request.user, active=False)
         print(Listings.objects.filter(Winner=request.user))
         context = {"user_winlist": user_winlist,
