@@ -1,8 +1,7 @@
 # Django-Auctions-webiste
 
-#### view webiste here ---> [https://djangoauctionapp.herokuapp.com/](https://djangoauctionapp.herokuapp.com/)
+### view webiste here ---> [https://djangoauctionapp.herokuapp.com/](https://djangoauctionapp.herokuapp.com/)
 
-## An ebay-like auctions website
 ```
 An eBay-like e-commerce auction site that allow users to:
 - post auction listings
@@ -16,7 +15,7 @@ An eBay-like e-commerce auction site that allow users to:
 
 ## Technology stack
 
-### Django 3.0.3
-### PostgreSQL 12
-### Heroku deployment
+#### Django 3.0.3
+#### PostgreSQL 12
+#### Heroku deployment
 
