@@ -12,6 +12,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from django.contrib.messages import add_message, ERROR,SUCCESS
 from .cart import Cart
+from decimal import Decimal
 
 #############################################################################################################
 
@@ -87,8 +88,8 @@ def listingpage(request, listing_id):
                "user": request.user, 
                "bids": Bid.objects.filter(listingid=listing_id),
                "comment_list": (Listings.objects.get(pk=listing_id).comment).all(),
-               "min_starting_bid": (Listings.objects.get(pk=listing_id).starting_bid)+1 ,
-               "min_bid": (Listings.objects.get(pk=listing_id).highest_bid)+1 }
+               "min_starting_bid": (Listings.objects.get(pk=listing_id).starting_bid)+Decimal(0.1) ,
+               "min_bid": (Listings.objects.get(pk=listing_id).highest_bid)+Decimal(0.1) }
     return render(request, "auctions/listing.html", context = context )   
 
 class CreateListing(LoginRequiredMixin, CreateView):

@@ -124,14 +124,14 @@
               bid must be greater than the highest bid ${{ listing.highest_bid }}
             </span> 
             <div style="padding: 12px 0 10px 0;" >
-              <input style="width: 100%;padding: 5px;" class="form-control form-control-sm" type="number" name="amount" min="{{ min_bid }}"  placeholder="{{ listing.highest_bid }}" step="0.1" oninput="setTwoNumberDecimal">              
+              <input style="width: 100%;padding: 5px;" class="form-control form-control-sm" type="number" name="amount" min="{{ min_bid }}"  placeholder="{{ listing.highest_bid }}" step=".1" oninput="setTwoNumberDecimal">              
             </div> 
             {% elif listing.Winner ==  None %}
             <span  style="color: rgba(75, 84, 94, 0.74);font-size: 12px;font-family: Verdana, Geneva, Tahoma, sans-serif;"> 
               bid must be greater than the highest bid ${{ listing.starting_bid }}
             </span>
             <div style="padding: 12px 0 10px 0;" >
-              <input style="width: 100%;padding: 5px;" class="form-control form-control-sm" type="number" name="amount" min="{{ min_starting_bid }}"  placeholder="{{ listing.starting_bid }}" step="0.1" oninput="setTwoNumberDecimal"> </div>
+              <input style="width: 100%;padding: 5px;" class="form-control form-control-sm" type="number" name="amount" min="{{ min_starting_bid }}"  placeholder="{{ listing.starting_bid }}" step=".1" oninput="setTwoNumberDecimal"> </div>
             {% endif %}
           
             <div >  
