@@ -8,7 +8,7 @@ An eBay-like e-commerce auction site that allow users to:
 - place bids on listings (with constrains)
 - comment on those listings
 - and add listings to a “watchlist”
-- checking their win list (after auction is end, user will see their winned item in winlist)
+- checking their win list (after auction is end, user will see the items they won in winlist)
 - adding items to cart (cart is not yet complete)
 - but NO CHECKOUT!
 ```
