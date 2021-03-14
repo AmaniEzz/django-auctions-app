@@ -242,7 +242,6 @@ def cart_detail(request):
     return render(request, 'auctions/cart_detail.html')
 
 
-
 @login_required
 def close_auction(request, listing_id):
     item = Listings.objects.get(pk=listing_id)

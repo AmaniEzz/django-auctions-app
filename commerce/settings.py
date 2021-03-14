@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'auctions',
     'crispy_forms',
     'cart',
+    'api',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -61,7 +63,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'commerce.urls'
-
+REST_FRAMEWORK = { 'FILTER_BACKEND': 'rest_framework.filters.DjangoFilterBackend', } 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
