@@ -12,7 +12,7 @@ An eBay-like e-commerce auction site that allow users to:
 - adding items to cart (cart is not yet complete)
 - but NO CHECKOUT!
 ``` 
-## API 
+# API 
 ### Method `GET`
 
 | Method                  | URL
@@ -26,8 +26,9 @@ An eBay-like e-commerce auction site that allow users to:
 | `GET` | `/api/bids/:listing_id>` |
 | `GET` | `/api/categories/` |
 
+---
 
-## Technology stack
+# Technology stack
 
 ### Django 3.0.3
 ### Django REST Framwork
