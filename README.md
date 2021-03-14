@@ -11,8 +11,9 @@ An eBay-like e-commerce auction site that allow users to:
 - checking their win list (after auction is end, user will see the items they won in winlist)
 - adding items to cart (cart is not yet complete)
 - but NO CHECKOUT!
-```
-## API
+``` 
+## API 
+### Method `GET`
 
 | Method                  | URL
 | ------------------------- |:------------------- |
