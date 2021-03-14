@@ -12,10 +12,24 @@ An eBay-like e-commerce auction site that allow users to:
 - adding items to cart (cart is not yet complete)
 - but NO CHECKOUT!
 ```
+## API
+
+| Method                  | URL
+| ------------------------- |:------------------- |
+| `GET` | `/api/lisitngs/` |
+| `GET` | `/api/lisitngs/<int:listing_id>` |
+| `GET` | `/api/comments/` |
+| `GET` | `/api/lisitngs/<int:pk>` |
+| `GET` | `/api/watchlists/` |
+| `GET` | `/api/bids/` |
+| `GET` | `/api/bids/<int:listing_id>` |
+| `GET` | `/api/categories/` |
+
 
 ## Technology stack
 
 ### Django 3.0.3
+### Django REST Farmwork
 ### Heroku deployment
 ### Heroku PostgreSQL addon
 
