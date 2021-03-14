@@ -29,7 +29,7 @@ An eBay-like e-commerce auction site that allow users to:
 ## Technology stack
 
 ### Django 3.0.3
-### Django REST Farmwork
+### Django REST Framwork
 ### Heroku deployment
 ### Heroku PostgreSQL addon
 
