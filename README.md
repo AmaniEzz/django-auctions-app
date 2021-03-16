@@ -15,9 +15,9 @@ An eBay-like e-commerce auction site that allow users to:
 # API 
 ### Method `GET`
 
-| Method                       | URL                   | Description
+| Method                        | URL                   | Description
 | ----------------------------- |:------------------- |:------------------------------------------------------------------------------------|
-| `GET` and `POST`| `/api/lisitngs/`        | API endpoint to view all listings or create a new listing,
+| `GET`, `POST`| `/api/lisitngs/` | API endpoint to view all listings or create a new listing,
 | `GET`, `PATCH`, `PUT`, `DELETE`        | `/api/lisitngs/:listing_id` | API endpoint to retrieve, update, edit or delete a lisitng object with given listing_id.    All users can accsess the listing, but only listings's seller can modify or delete it. User should be logged in|
 | `POST`| `listings/:listing_id/make_bid/` |  API endpoint that alow making a bid on a listing with given listing_id, and display it if created successfully, JSON --> { "bid_value": you_bid},  User should be logged in|
 | `GET` | `/api/comments/` | API endpoint that allows all comments to be viewed. User should be logged in}
