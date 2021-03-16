@@ -13,7 +13,6 @@ An eBay-like e-commerce auction site that allow users to:
 - but NO CHECKOUT!
 ``` 
 # API 
-### Method `GET`
 
 | Method                        | URL                   | Description
 | ----------------------------- |:------------------- |:------------------------------------------------------------------------------------|
