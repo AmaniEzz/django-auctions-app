@@ -17,13 +17,12 @@ An eBay-like e-commerce auction site that allow users to:
 
 | Method                  | URL
 | ------------------------- |:------------------- |
-| `GET` | `/api/lisitngs/` |
-| `GET` | `/api/lisitngs/:listing_id` |
+| `GET` and `POST`| `/api/lisitngs/` |
+| `GET`, `PATCH`, `PUT`, `DELETE` | `/api/lisitngs/:listing_id` |
+| `POST`| `listings/:listing_id/make_bid/` |
 | `GET` | `/api/comments/` |
-| `GET` | `/api/lisitngs/:pk>` |
 | `GET` | `/api/watchlists/` |
 | `GET` | `/api/bids/` |
-| `GET` | `/api/bids/:listing_id>` |
 | `GET` | `/api/categories/` |
 
 ---
