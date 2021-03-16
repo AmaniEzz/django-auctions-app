@@ -33,7 +33,7 @@ class Comment(models.Model):
 
 # Table of all Listings in website
 class Listings(models.Model):
-    seller        = models.ForeignKey(User, on_delete=models.CASCADE, related_name="seller", blank=True,)
+    seller        = models.ForeignKey(User, on_delete=models.CASCADE, related_name="seller")
     title         = models.CharField(max_length=100)
     description   = models.TextField()
     starting_bid  = models.DecimalField(max_digits=10, decimal_places=2)
