@@ -33,6 +33,6 @@ An eBay-like e-commerce auction site that allow users to:
 ### Django 3.0.3
 ### Django REST Framwork
 ### Heroku deployment
-### Heroku PostgreSQL addon
+### Heroku PostgreSQL add on
 
 
