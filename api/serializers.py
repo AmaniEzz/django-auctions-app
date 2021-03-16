@@ -53,17 +53,6 @@ class BidsSerializer(serializers.ModelSerializer):
         return rep
 
 
-class WatchlistFilter(django_filters.FilterSet):
-
-    user = django_filters.CharFilter(
-        name='watchlist__user',
-        lookup_type='contains',
-    )
-
-    class Meta:
-        model = Watchlist
-        fields = ('user', 'listing')
-
 class WatchListSerializer(serializers.ModelSerializer):
 
     class Meta:

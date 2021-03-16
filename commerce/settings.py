@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'cart',
     'api',
+    'django_filters',
     'rest_framework',
+    'rest_framework.authtoken', 
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -63,7 +65,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'commerce.urls'
-REST_FRAMEWORK = { 'FILTER_BACKEND': 'rest_framework.filters.DjangoFilterBackend', } 
+REST_FRAMEWORK = { 'FILTER_BACKEND': 'rest_framework.filters.DjangoFilterBackend', 
+                   'DEFAULT_AUTHENTICATION_CLASSES': [
+                        'rest_framework.authentication.TokenAuthentication',  # <-- And here
+                    ],
+                } 
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -83,7 +90,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'commerce.wsgi.application'
 
-
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 5
+}
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 

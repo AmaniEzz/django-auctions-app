@@ -11,6 +11,10 @@ class User(AbstractUser):
 class Categories(models.Model):
     category_name = models.CharField(max_length=100)
 
+    class Meta:
+        verbose_name_plural = "Categories"
+        ordering = ['category_name']
+
     def __str__(self):
         return self.category_name
 
@@ -29,16 +33,16 @@ class Comment(models.Model):
 
 # Table of all Listings in website
 class Listings(models.Model):
-    seller        = models.ForeignKey(User, on_delete=models.CASCADE, related_name="seller")
+    seller        = models.ForeignKey(User, on_delete=models.CASCADE, related_name="seller", blank=True,)
     title         = models.CharField(max_length=100)
     description   = models.TextField()
     starting_bid  = models.DecimalField(max_digits=10, decimal_places=2)
     highest_bid   = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     desired_price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    category      = models.ForeignKey(Categories, on_delete=models.CASCADE, related_name="category")
+    category      = models.ForeignKey(Categories, on_delete=models.CASCADE, related_name="category", blank=True, null=True)
     image         = models.CharField(max_length=500)
     created_at    = models.DateTimeField(auto_now_add=True)
-    Winner        = models.ForeignKey(User, on_delete=models.CASCADE,blank=True, related_name="winner", null=True)
+    Winner        = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, related_name="winner", null=True)
     active        = models.BooleanField(default=True)
     comment       = models.ManyToManyField(Comment, blank=True)
 

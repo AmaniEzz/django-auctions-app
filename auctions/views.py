@@ -17,7 +17,7 @@ from decimal import Decimal
 #############################################################################################################
 
 def index(request):
-    context = {"Listings": Listings.objects.all(),
+    context = {"Listings": Listings.objects.all().order_by('-created_at'),
                "user": request.user,
                "header": "Home"}
     return render(request, "auctions/index.html", context = context )   
@@ -121,7 +121,7 @@ def make_bid(request, listing_id, method=(["POST"])):
     amount = request.POST["amount"]
     item = Listings.objects.get(pk=listing_id)
 
-    if amount is not None:
+    if amount is not None and amount <= item.desired_price and amount > item.highest_bid:
         # Save a new bid information in the Bid table
         new_bid = Bid(bidder=request.user, listingid=item, bid_value=amount)
         new_bid.save()
