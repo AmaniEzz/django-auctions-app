@@ -44,13 +44,12 @@ class ListingDetailsView(APIView):
             return Listings.objects.get(pk=listing_id)
         except Listings.DoesNotExist:
             return None
-
     # 1. Retrieve
     def get(self, request, listing_id, *args, **kwargs):
         '''
         Retrieves the detail of the listing with given listing_id
         '''
-        listing_instance = Listings.objects.get(pk=listing_id)
+        listing_instance =  self.get_object(listing_id)
         if not listing_instance:
             return Response(
                 {"res": "Listing with the given id does not exists"}, 
