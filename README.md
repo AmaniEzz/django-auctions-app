@@ -1,11 +1,13 @@
 # Auctions webiste
-###### An eBay-like e-commerce auction site
+
+An eBay-like e-commerce auction site that will allow users to post auction listings, place bids on listings, comment on those listings, and add listings to a “watchlist.”
+
 
 ### view webiste here ---> [https://djangoauctionapp.herokuapp.com/](https://djangoauctionapp.herokuapp.com/)
 
 ------------------------------------------------------------------------------------------
 
-# Project functionalities
+# Website Functionalities
 
 - **Models**: In this project, I've created 5 database models, Listings model, Bid model, Comments model, Categories model and finally Watchlists model. In addition to Django abstract User model.
 
