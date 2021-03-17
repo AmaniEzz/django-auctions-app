@@ -118,7 +118,7 @@ def category_active_list(request, name):
 #############################################################################################################
 @login_required     
 def make_bid(request, listing_id, method=(["POST"])):
-    amount = request.POST["amount"]
+    amount = float(request.POST["amount"])
     item = Listings.objects.get(pk=listing_id)
 
     if amount is not None and amount <= item.desired_price and amount > item.highest_bid:
