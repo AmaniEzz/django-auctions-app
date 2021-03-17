@@ -1,6 +1,13 @@
 # Django Auctions site
 
-An eBay-like e-commerce auction site that will allow users to post auction listings, place bids on listings, comment on those listings, and add listings to a “watchlist.”
+```
+An eBay-like e-commerce auction site that will allow users to post auction listings, 
+place bids on listings, comment on those listings, and add listings to a “watchlist.”
+```
+
+
+Inside prject root folder, I have two apps ([auctions](https://github.com/AmaniEzz/django-auctions-app/tree/master/auctions) app) and ( [api](https://github.com/AmaniEzz/django-auctions-app/tree/master/api) app)).
+
 
 
 ### Visit webiste here ---> [https://djangoauctionapp.herokuapp.com/](https://djangoauctionapp.herokuapp.com/)
@@ -9,7 +16,7 @@ An eBay-like e-commerce auction site that will allow users to post auction listi
 
 # Website Functionalities
 
-- **Models**: In this project, I've created 5 database models, Listings model, Bid model, Comments model, Categories model and finally Watchlists model. In addition to Django abstract User model.
+- **PostgreSQL Database**: In this project, I've created 5 database tables, ***Listings*** table, ***Bid*** table, ***Comments*** table, ***Categories*** table and finally ***Categories*** table. In addition to Django abstract User model. Interactions with the database is done using Django ORM. see [Modele.py](https://github.com/AmaniEzz/django-auctions-app/blob/master/auctions/models.py)
 
 - **Create Listing page:** Logged in Users can visit a page to create a new listing. They're able to specify a title for the listing, a text-based description, a starting bid , a desired price, a URL for an image for the listing, and/or a category (e.g. Antique, Home, Electronics, Beauty, etc..).
  
@@ -49,7 +56,6 @@ An eBay-like e-commerce auction site that will allow users to post auction listi
 
 # API 
 
-
 ```
 I implemented this RESTful API, for consuming by javascript front-end frameworks such as (Angular, React or Vue) in the future.
 I haven't secured the API at this point, because this project is not a real word project, it's for applying what I have learned 
@@ -64,6 +70,9 @@ so far, and demonstrating my skills.
 | `GET` | `/api/watchlists/` | create or read a list of watchlists|
 | `GET` | `/api/categories/` | create or read a list of categories
 
+
+> See API's [views.py](https://github.com/AmaniEzz/django-auctions-app/blob/master/api/views.py)
+
 -----
 
 # Technology stack
@@ -77,3 +86,12 @@ so far, and demonstrating my skills.
 ### PostgreSQL database
 
 
+
+---
+
+## Resources:
+- [Django REST framwork](https://www.django-rest-framework.org/)
+- [Django REST framework: Build an API in 15 minutes](https://blog.logrocket.com/django-rest-framework-build-an-api-in-15-minutes/)
+- [How to Build an API in Python with Django and deploy it on Heroku](https://rapidapi.com/blog/python-django-rest-api-tutorial/)
+- [how to deploy a Django app with Postgres database on Heroku](https://medium.com/@hdsingh13/deploying-django-app-on-heroku-with-postgres-as-backend-b2f3194e8a43)
+- [How to Deploy a Django Application to Heroku with Git CLI](https://stackabuse.com/how-to-deploy-a-django-application-to-heroku-with-git-cli/)
