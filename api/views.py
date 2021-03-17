@@ -35,7 +35,7 @@ class ListingDetailsView(APIView):
     API endpointa that retrieve, update, edit or delete a lisitng object with given id.
     """
 
-    def get_object(self, listing_id, user_id):
+    def get_object(self, listing_id):
 
         '''
         Helper method to get the object with given listing_id and given seller id
@@ -80,7 +80,7 @@ class ListingDetailsView(APIView):
         return Response(listings_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
       
     # 3. edit
-    def put(self, request, listing_id, user_id, *args, **kwargs):
+    def put(self, request, listing_id, *args, **kwargs):
         '''
         Updates the listing with given listing_id if exists
         '''
@@ -106,7 +106,7 @@ class ListingDetailsView(APIView):
         return Response(listings_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     # 4. Delete
-    def delete(self, request, listing_id, user_id, *args, **kwargs):
+    def delete(self, request, listing_id, *args, **kwargs):
         '''
         Deletes the listing item with given listing_id if exists
         '''
