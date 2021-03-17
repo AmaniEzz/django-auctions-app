@@ -1,5 +1,5 @@
 # Auctions webiste
-####### An eBay-like e-commerce auction site
+###### An eBay-like e-commerce auction site
 
 ### view webiste here ---> [https://djangoauctionapp.herokuapp.com/](https://djangoauctionapp.herokuapp.com/)
 
