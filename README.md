@@ -6,7 +6,7 @@ comment on those listings, and add listings to a “watchlist.”
 ```
 
 
-Inside prject root folder, I have two apps ([auctions](https://github.com/AmaniEzz/django-auctions-app/tree/master/auctions) app) and ( [api](https://github.com/AmaniEzz/django-auctions-app/tree/master/api) app)).
+Inside project's root folder, I have two apps ([auctions](https://github.com/AmaniEzz/django-auctions-app/tree/master/auctions) app) and ( [api](https://github.com/AmaniEzz/django-auctions-app/tree/master/api) app).
 
 
 
