@@ -123,40 +123,6 @@ class ListingDetailsView(APIView):
         )
    
 
-@api_view(['GET','POST'])
-def make_bid(request, listing_id):
-
-    """
-    API endpoint that alow making a bid on a listing with given listing_id, and display it if created successfully, JSON --> { "bid_value": you_bid}
-    """
-    # add permission to check if user is authenticated (logged in)
-    permission_classes = [permissions.IsAuthenticated]
-    item = Listings.objects.get(pk=listing_id)
-
-    amount = request.data.get("bid_value")
-    if amount is not None and amount <= item.desired_price and amount > item.highest_bid:
-        data = {
-                "bid_value": amount,
-                "listingid": listing_id,
-                "bidder": request.user.id,
-                }
-
-        serializer = BidsSerializer(data=data)
-
-        if serializer.is_valid():
-            serializer.save()
-
-            # Update the current price of the item, and the current winner
-            item.highest_bid = amount
-            item.Winner = request.user
-            item.save()
-
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    else:
-        return Response({"Message": r"Please place a bid with value more than ${0}, and less than ${1}!" .format(item.highest_bid, item.desired_price)}, status=status.HTTP_200_OK)
-
-
 class CommentsView(generics.ListAPIView):
     """
     API endpoint that allows all comments to be viewed.
@@ -197,4 +163,37 @@ class CategoriesView(ListAPIView):
     queryset = Categories.objects.all()
     serializer_class = CategoriesSerializer
 
+
+@api_view(['GET','POST'])
+def make_bid(request, listing_id):
+
+    """
+    API endpoint that alow making a bid on a listing with given listing_id, and display it if created successfully, JSON --> { "bid_value": you_bid}
+    """
+    # add permission to check if user is authenticated (logged in)
+    permission_classes = [permissions.IsAuthenticated]
+    item = Listings.objects.get(pk=listing_id)
+
+    amount = request.data.get("bid_value")
+    if amount is not None and amount <= item.desired_price and amount > item.highest_bid:
+        data = {
+                "bid_value": amount,
+                "listingid": listing_id,
+                "bidder": request.user.id,
+                }
+
+        serializer = BidsSerializer(data=data)
+
+        if serializer.is_valid():
+            serializer.save()
+
+            # Update the current price of the item, and the current winner
+            item.highest_bid = amount
+            item.Winner = request.user
+            item.save()
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        return Response({"Message": r"Please place a bid with value more than ${0}, and less than ${1}!" .format(item.highest_bid, item.desired_price)}, status=status.HTTP_200_OK)
 

@@ -14,15 +14,13 @@ An eBay-like e-commerce auction site that allow users to:
 ``` 
 # API 
 
-| Method                        | URL                   | Description
+| Method                        | URL                   | Action
 | ----------------------------- |:------------------- |:------------------------------------------------------------------------------------|
-| `GET`, `POST`| `/api/lisitngs/` | API endpoint to view all listings or create a new listing,
-| `GET`, `PATCH`, `PUT`, `DELETE`        | `/api/lisitngs/:listing_id` | API endpoint to retrieve, update, edit or delete a lisitng object with given listing_id.    All users can accsess the listing, but only listings's seller can modify or delete it. User should be logged in|
-| `POST`| `listings/:listing_id/make_bid/` |  API endpoint that alow making a bid on a listing with given listing_id, and display it if created successfully, JSON --> { "bid_value": you_bid},  User should be logged in|
-| `GET` | `/api/comments/` | API endpoint that allows all comments to be viewed. User should be logged in}
-| `GET` | `/api/watchlists/` | API endpoint that lists all bids made by users, you can filter them by bid's id or it's listing_id|
-| `GET` | `/api/bids/` |  API endpoint that get all Watchlists. You can filter by a listing ID to see which user has this listing in their watchlist, or you can filter by the username of watchlists's owner|
-| `GET` | `/api/categories/` |
+| `GET`, `POST`| `/api/lisitngs/` | create or read a list of Listings
+| `GET`, `PATCH`, `PUT`, `DELETE` | `/api/lisitngs/:listing_id` |  read, update, edit or delete a listing |
+| `GET` | `/api/comments/` | create or read a list of comment |
+| `GET` | `/api/watchlists/` | create or read a list of watchlists|
+| `GET` | `/api/categories/` | create or read a list of categories
 
 ---
 
