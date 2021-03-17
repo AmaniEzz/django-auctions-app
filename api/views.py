@@ -17,12 +17,8 @@ from rest_framework.views import APIView
 
 
 class ListingsView(generics.ListCreateAPIView):
-    # add permission to check if user is authenticated
-    permission_classes = [permissions.IsAuthenticated]
-
     """
     API endpoint that allows all Listings to be viewed or create a new listing.
-    User should be logged in
     """
 
     queryset = Listings.objects.all()
@@ -37,13 +33,7 @@ class ListingDetailsView(APIView):
 
     """
     API endpointa that retrieve, update, edit or delete a lisitng object with given id.
-    All users can accsess the listing, but only listings's seller can modify or delete it,
-    User should be logged in
     """
-
-    # add permission to check if user is authenticated
-    permission_classes = [permissions.IsAuthenticated]
-
 
     def get_object(self, listing_id, user_id):
 
@@ -51,7 +41,7 @@ class ListingDetailsView(APIView):
         Helper method to get the object with given listing_id and given seller id
         '''
         try:
-            return Listings.objects.get(pk=listing_id, seller=user_id)
+            return Listings.objects.get(pk=listing_id)
         except Listings.DoesNotExist:
             return None
 
@@ -63,7 +53,7 @@ class ListingDetailsView(APIView):
         listing_instance = Listings.objects.get(pk=listing_id)
         if not listing_instance:
             return Response(
-                {"res": "Listing with the given id does not exists, Or you're not authorized to access it"}, 
+                {"res": "Listing with the given id does not exists"}, 
                 status=status.HTTP_400_BAD_REQUEST
             )
 
@@ -76,10 +66,10 @@ class ListingDetailsView(APIView):
         Updates the listing with given listing_id if exists,
         '''
 
-        listing_instance = self.get_object(listing_id, user_id=request.user.id)
+        listing_instance = self.get_object(listing_id)
         if not listing_instance:
             return Response(
-                {"res": "Listing with the given id does not exists, Or you're not authorized to access it"}, 
+                {"res": "Listing with the given id does not exists"}, 
                 status=status.HTTP_400_BAD_REQUEST)
 
         data = JSONParser().parse(request)
@@ -94,10 +84,10 @@ class ListingDetailsView(APIView):
         '''
         Updates the listing with given listing_id if exists
         '''
-        listing_instance = self.get_object(listing_id, user_id=request.user.id)
+        listing_instance = self.get_object(listing_id)
         if not listing_instance:
             return Response(
-                {"res": "Listing with the given id does not exists, Or you're not authorized to access it"}, 
+                {"res": "Listing with the given id does not exists"}, 
                 status=status.HTTP_400_BAD_REQUEST
             )
         data = {
@@ -120,10 +110,10 @@ class ListingDetailsView(APIView):
         '''
         Deletes the listing item with given listing_id if exists
         '''
-        listing_instance = self.get_object(listing_id, user_id=request.user.id)
+        listing_instance = self.get_object(listing_id)
         if not listing_instance:
             return Response(
-                {"res": "Listing with the given id does not exists, Or you're not authorized to access it"}, 
+                {"res": "Listing with the given id does not exists"}, 
                 status=status.HTTP_400_BAD_REQUEST
             )
         listing_instance.delete()
@@ -168,11 +158,8 @@ def make_bid(request, listing_id):
 
 
 class CommentsView(generics.ListAPIView):
-    # add permission to check if user is authenticated
-    permission_classes = [permissions.IsAuthenticated]
-
     """
-    API endpoint that allows all comments to be viewed. User should be logged in
+    API endpoint that allows all comments to be viewed.
     """
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
@@ -187,9 +174,7 @@ class ListBidsview(ListAPIView):
     """
     API endpoint that lists all bids made by users, you can filter them by bid's id or it's listing_id
     """
-    # add permission to check if user is authenticated (logged in)
-    permission_classes = [permissions.IsAuthenticated]
-    
+
     queryset = Bid.objects.all()
     serializer_class = BidsSerializer
     filter_fields = ['id', 'listingid']
