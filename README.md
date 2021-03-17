@@ -16,7 +16,7 @@ Inside prject root folder, I have two apps ([auctions](https://github.com/AmaniE
 
 # Website Functionalities
 
-- **PostgreSQL Database**: In this project, I've created 5 database tables, ***Listings*** table, ***Bid*** table, ***Comments*** table, ***Categories*** table and finally ***Categories*** table. In addition to Django abstract User model. Interactions with the database is done using Django ORM. see [Modele.py](https://github.com/AmaniEzz/django-auctions-app/blob/master/auctions/models.py)
+- **PostgreSQL Database**: In this project, I've created 5 database tables, ***Listings*** table, ***Bid*** table, ***Comments*** table, ***Categories*** table and finally ***Categories*** table. In addition to Django abstract User model. Interactions with the database is done using Django ORM. see [Models.py](https://github.com/AmaniEzz/django-auctions-app/blob/master/auctions/models.py)
 
 - **Create Listing page:** Logged in Users can visit a page to create a new listing. They're able to specify a title for the listing, a text-based description, a starting bid , a desired price, a URL for an image for the listing, and/or a category (e.g. Antique, Home, Electronics, Beauty, etc..).
  
