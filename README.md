@@ -1,9 +1,9 @@
-# Auctions webiste
+# Django Auctions site
 
 An eBay-like e-commerce auction site that will allow users to post auction listings, place bids on listings, comment on those listings, and add listings to a “watchlist.”
 
 
-### view webiste here ---> [https://djangoauctionapp.herokuapp.com/](https://djangoauctionapp.herokuapp.com/)
+### Visit webiste here ---> [https://djangoauctionapp.herokuapp.com/](https://djangoauctionapp.herokuapp.com/)
 
 ------------------------------------------------------------------------------------------
 
@@ -69,8 +69,11 @@ so far, and demonstrating my skills.
 # Technology stack
 
 ### Django 3.0.3
+### HTML5/CSS
+### Bootstrap 4
 ### Django REST Framwork
 ### Heroku deployment
 ### Heroku PostgreSQL add on
+### PostgreSQL database
 
 
