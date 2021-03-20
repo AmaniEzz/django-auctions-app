@@ -34,9 +34,9 @@
                 <p class="card-text">{{ listing.description|truncatewords:20 }}</p>
                 <div style="display:flex; justify-content: space-between; padding-top: 40px;">
                 {% if listing.Winner !=  None %}
-                    <div class="card-text">Highest bid:<strong>  ${{ listing.highest_bid }}</strong></div> 
+                    <div class="card-text">Current price:<strong>  ${{ listing.highest_bid }}</strong></div> 
                 {% elif listing.Winner ==  None %}
-                    <div class="card-text">Highest bid:<strong>  ${{ listing.starting_bid }}</strong></div> 
+                    <div class="card-text">Current price:<strong>  ${{ listing.starting_bid }}</strong></div> 
                 {% endif %}
                     <p class="card-text"><small class="text-muted">Created {{ listing.created_at }}</small></p>
                 </div>

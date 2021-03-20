@@ -247,3 +247,21 @@ label.requiredField {
   border-left: 15px solid  rgba(114, 218, 166, 0.5);
   border-bottom: 15px solid transparent;
 }
+
+/* Toggle this class - hide and show the popup */
+.box .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;} 
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}

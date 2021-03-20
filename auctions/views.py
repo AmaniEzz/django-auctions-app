@@ -118,20 +118,23 @@ def category_active_list(request, name):
 #############################################################################################################
 @login_required     
 def make_bid(request, listing_id, method=(["POST"])):
-    amount = float(request.POST["amount"])
+    amount = request.POST["amount"]
     item = Listings.objects.get(pk=listing_id)
 
-    if amount is not None and amount <= item.desired_price and amount > item.highest_bid:
-        # Save a new bid information in the Bid table
-        new_bid = Bid(bidder=request.user, listingid=item, bid_value=amount)
-        new_bid.save()
+    if amount:
+        if float(amount) > item.highest_bid:
+            # Save a new bid information in the Bid table
+            new_bid = Bid(bidder=request.user, listingid=item, bid_value=amount)
+            new_bid.save()
 
-        # Update the current price of the item, and the current winner
-        item.highest_bid = amount
-        item.Winner = request.user
-        item.save()
-        
-    return HttpResponseRedirect(reverse('listingpage', args=[listing_id]))
+            # Update the current price of the item, and the current winner
+            item.highest_bid = amount
+            item.Winner = request.user
+            item.save()
+            return HttpResponseRedirect(reverse('listingpage', args=[listing_id]))
+
+    else:
+        return HttpResponseRedirect(reverse('listingpage', args=[listing_id]))
 
 
 @login_required 
