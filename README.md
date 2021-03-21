@@ -82,9 +82,9 @@ so far, and demonstrating my skills.
 ### HTML5/CSS
 ### Bootstrap 4
 ### Django REST Framwork
-### Heroku deployment
-### Heroku PostgreSQL add on
-### PostgreSQL database
+### Heroku
+    - created Heroku Postgres database add on, then exported it to a local postgres database.
+### PostgreSQL
 
 
 
