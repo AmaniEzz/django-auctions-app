@@ -79,12 +79,14 @@ so far, and demonstrating my skills.
 # Technology stack
 
 ### Django 3.0.3
-### HTML5/CSS
-### Bootstrap 4
 ### Django REST Framwork
 ### Heroku
-    - created Heroku Postgres database add on, then exported it to a local postgres database.
+     created Heroku Postgres database add on, then exported it to a local postgres database.
 ### PostgreSQL
+### HTML5/CSS
+### Bootstrap 4
+
+
 
 
 
