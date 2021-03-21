@@ -96,3 +96,4 @@ so far, and demonstrating my skills.
 - [How to Build an API in Python with Django and deploy it on Heroku](https://rapidapi.com/blog/python-django-rest-api-tutorial/)
 - [how to deploy a Django app with Postgres database on Heroku](https://medium.com/@hdsingh13/deploying-django-app-on-heroku-with-postgres-as-backend-b2f3194e8a43)
 - [How to Deploy a Django Application to Heroku with Git CLI](https://stackabuse.com/how-to-deploy-a-django-application-to-heroku-with-git-cli/)
+- [Importing and Exporting Heroku Postgres Databases](https://devcenter.heroku.com/articles/heroku-postgres-import-export)
