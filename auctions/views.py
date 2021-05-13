@@ -84,12 +84,15 @@ def register(request):
 #############################################################################################################
 def listingpage(request, listing_id):
     # retrive all comment under this listing
-    context = {"listing": Listings.objects.get(pk=listing_id),
+    item = Listings.objects.get(pk=listing_id)
+    context = {"listing": item,
                "user": request.user, 
+               "winner": item.get_winner(),
+               "seller": item.get_seller(),
                "bids": Bid.objects.filter(listingid=listing_id),
-               "comment_list": (Listings.objects.get(pk=listing_id).comment).all(),
-               "min_starting_bid": (Listings.objects.get(pk=listing_id).starting_bid)+Decimal(0.1) ,
-               "min_bid": (Listings.objects.get(pk=listing_id).highest_bid)+Decimal(0.1) }
+               "comment_list": (item.comment).all(),
+               "min_starting_bid": (item.starting_bid)+Decimal(0.1) ,
+               "min_bid": (item.highest_bid)+Decimal(0.1) }
     return render(request, "auctions/listing.html", context = context )   
 
 class CreateListing(LoginRequiredMixin, CreateView):
@@ -126,10 +129,9 @@ def make_bid(request, listing_id, method=(["POST"])):
             # Save a new bid information in the Bid table
             new_bid = Bid(bidder=request.user, listingid=item, bid_value=amount)
             new_bid.save()
-
             # Update the current price of the item, and the current winner
-            item.highest_bid = amount
-            item.Winner = request.user
+            item.update_price(amount)
+            item.set_current_winner(request.user)
             item.save()
             return HttpResponseRedirect(reverse('listingpage', args=[listing_id]))
 
@@ -139,13 +141,14 @@ def make_bid(request, listing_id, method=(["POST"])):
 
 @login_required 
 def view_winner(request, listing_id):
-    pass
-
+    item = Listings.objects.get(pk=listing_id)
+    winner = item.get_winner()
+    return HttpResponseRedirect(reverse('listingpage', args=[listing_id]))
      
 @login_required
 def reopen_auction(request, listing_id):
     item = Listings.objects.get(pk=listing_id)
-    item.active=True
+    item.reopen()
     item.save()
     return HttpResponseRedirect(reverse('listingpage', args=[listing_id]))
 
@@ -158,16 +161,10 @@ def watchlist_page(request):
     #check if user has items in their watchlist
     if Watchlist.objects.filter(user=request.user):
 
-            # query all items in user watchlist
-            user_items = Watchlist.objects.get(user=request.user)
-            user_watchlist = []
-            for item in user_items.listing.all():
-
-                # only return items that are active and not been won by the user
-                if item.active:
-                    user_watchlist.append(item)
+            user_watchlist = Watchlist.objects.get(user=request.user)
+            user_items = user_watchlist.active_items()
                 
-            context = {"user_items":user_watchlist,
+            context = {"user_items":user_items,
             }
 
             if user_watchlist:
@@ -248,13 +245,13 @@ def cart_detail(request):
 @login_required
 def close_auction(request, listing_id):
     item = Listings.objects.get(pk=listing_id)
-    item.active = False
+    item.close()
     item.save()
 
     # Remove item from winner's watchlist if exists
     if Watchlist.objects.filter(user=request.user, listing=listing_id).exists():
             watchlist = Watchlist(user=item.Winner)
-            item_todelet =   get_object_or_404(Watchlist, listing=listing_id)
+            item_todelet = get_object_or_404(Watchlist, listing=listing_id)
             watchlist.listing.remove(item_todelet)
 
 

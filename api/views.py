@@ -163,12 +163,13 @@ class CategoriesView(ListAPIView):
     serializer_class = CategoriesSerializer
 
 
+"""
 @api_view(['GET','POST'])
 def make_bid(request, listing_id):
 
-    """
+    """"""
     API endpoint that alow making a bid on a listing with given listing_id, and display it if created successfully, JSON --> { "bid_value": you_bid}
-    """
+    """"""
     # add permission to check if user is authenticated (logged in)
     permission_classes = [permissions.IsAuthenticated]
     item = Listings.objects.get(pk=listing_id)
@@ -195,4 +196,4 @@ def make_bid(request, listing_id):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     else:
         return Response({"Message": r"Please place a bid with value more than ${0}, and less than ${1}!" .format(item.highest_bid, item.desired_price)}, status=status.HTTP_200_OK)
-
+"""

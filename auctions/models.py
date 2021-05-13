@@ -6,7 +6,6 @@ from django.urls import reverse
 class User(AbstractUser):
     pass
 
-
 # Table of Categories
 class Categories(models.Model):
     category_name = models.CharField(max_length=100)
@@ -18,7 +17,6 @@ class Categories(models.Model):
     def __str__(self):
         return self.category_name
 
-
 # Table comments, stores all info related to a commnet
 class Comment(models.Model):
     
@@ -29,7 +27,6 @@ class Comment(models.Model):
    
     def __str__(self):
         return f"{self.comment}"
-
 
 # Table of all Listings in website
 class Listings(models.Model):
@@ -46,13 +43,30 @@ class Listings(models.Model):
     active        = models.BooleanField(default=True)
     comment       = models.ManyToManyField(Comment, blank=True)
 
-
     def __str__(self):
         return self.title
 
     def get_absolute_url(self): 
         return reverse('listingpage', args=[(self.pk)])
    
+    def update_price(self, bid_value):
+        self.highest_bid = bid_value
+
+    def close(self):
+        self.active = False
+    
+    def reopen(self):
+        self.active = True
+
+    def set_current_winner(self, bidder):
+        self.Winner = bidder
+    
+    def get_winner(self):
+        return self.Winner
+        
+    def get_seller(self):
+        return self.seller
+    
 
 # Table bid, stores all info related to a bid
 class Bid(models.Model):
@@ -65,7 +79,6 @@ class Bid(models.Model):
     def __str__(self):
         return f"A bid of ({self.bid_value}$) made by ({self.bidder}) on an item named ( {self.listingid} )"
 
-
 # Table to store the watchlist for each user
 class Watchlist(models.Model):
     user      = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -73,3 +86,11 @@ class Watchlist(models.Model):
 
     def __str__(self):
        return f"{self.user}'s WatchList"
+
+    def active_items(self):
+        list = []
+        # only return items that are active and not been won by the user
+        for item in self.listing.all():
+            if item.active:
+                list.append(item)
+        return list

@@ -26,7 +26,7 @@ MEDIA_URL = '/media/'
 SECRET_KEY = '6ps8j!crjgrxt34cqbqn7x&b3y%(fny8k8nh21+qa)%ws3fh!q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['djangoauctionapp.herokuapp.com', '127.0.0.1']
 
@@ -108,9 +108,9 @@ DATABASES = {
 
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 
-        'NAME': 'newdatabase',
+        'NAME': 'heroku',
 
-        'USER': 'myprojectuser',
+        'USER': 'postgres',
 
         'PASSWORD': '',
 

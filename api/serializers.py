@@ -51,6 +51,7 @@ class BidsSerializer(serializers.ModelSerializer):
         rep['bidder'] = UserSerializer(instance.bidder).data
         rep['listingid'] = ListingsSerializer(instance.listingid).data["title"]
         return rep
+        
 
 
 class WatchListSerializer(serializers.ModelSerializer):

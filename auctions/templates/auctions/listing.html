@@ -9,7 +9,7 @@
 {% load static %}
 {% block body %}
 
-{% if user.is_authenticated and listing.seller == user and listing.active %}
+{% if user.is_authenticated and user == seller and listing.active %}
 <div id="container">
   <div class="row">
     <div class="column">
@@ -19,12 +19,12 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">{{ listing.title }}</h5>
-          <p class="card-text"> Seller: <code>@{{ listing.seller }}</code></p>
+          <p class="card-text"> Seller: <code>@{{ seller }}</code></p>
           <hr>
 
               <p class="card-text"> <strong>Starting Bid:</strong> ${{ listing.starting_bid }}</p>
               <p class="card-text"> <strong>Current price:</strong> ${{ listing.highest_bid }}</p>
-              <p class="card-text"> <strong>Bidder:</strong> <code>@{{ listing.Winner }}</code></p>
+              <p class="card-text"> <strong>Bidder:</strong> <code>@{{ winner }}</code></p>
 
           <div >
               <a href="{% url 'close_auction' listing.id %}" type="submit" role="button" class="btn btn-primary">Close Auction</a>
@@ -64,26 +64,26 @@
 
 {% elif user.is_authenticated and listing.active == 0 %}
 <div class="listing_footer">
-    {% if user == listing.Winner %}
+    {% if user == winner %}
         <div class="alert alert-success" style="text-align: center" role="alert">
             Auction closed. You win!
         </div>
-    {% elif user != listing.Winner  and  user != listing.seller %}
+    {% elif user != winner  and  user != seller %}
         <div class="alert alert-success" style="text-align: center" role="alert">
             Sorry you missed out! <br>
             This auction is closed
         </div>
-    {% elif user == listing.seller and listing.Winner == None %}
+    {% elif user == seller and winner == None %}
         <div class="alert alert-success" style="text-align: center" role="alert">
           <p  class="alert-heading">Auction closed with no Winner!</p>
             <div>
               <a href="{% url 'reopen_auction' listing.id %}" type="submit" role="button" class="btn btn-primary btn-sm">Reopen Auction</a>
             </div>
         </div>
-    {% elif user == listing.seller and listing.Winner != None %}
+    {% elif user == listing and winner != None %}
     <div class="alert alert-success" style="text-align: center;" role="alert">
       <h4 class="alert-heading">Auction Closed!</h4>
-      <p class="mb-0">Winner is : <code>@{{listing.Winner}}</code></p>
+      <p class="mb-0">Winner is : <code>@{{winner}}</code></p>
       <p class="mb-0">Price is : ${{listing.highest_bid}}</p>
 
   </div>
@@ -104,10 +104,10 @@
         <div class="row1">
             <div class="card-body" > 
               <h4 style="padding-bottom: 20px;font-size: x-large;" class="card-title"> {{ listing.title }}</h4>
-              <div class="card-text">Seller: <code>@{{ listing.seller }}</code> </div>
-              {% if listing.Winner !=  None %}
+              <div class="card-text">Seller: <code>@{{ seller }}</code> </div>
+              {% if winner !=  None %}
                   <div class="card-text">Current price:<strong>  ${{ listing.highest_bid }}</strong></div> 
-              {% elif listing.Winner ==  None %}
+              {% elif winner ==  None %}
                   <div class="card-text">Current price:<strong>  ${{ listing.starting_bid }}</strong></div> 
               {% endif %}
 
@@ -119,14 +119,14 @@
           <form action="{% url 'make_bid' listing.id %}" method="POST" class="column" style="margin-right: 60px;">
             {% csrf_token %}
             <div style="color: rgba(10, 10, 10, 0.692);"> <h4 > Place a Bid </h4> </div>
-            {% if listing.Winner !=  None %}
+            {% if winner !=  None %}
             <span  style="color: rgba(75, 84, 94, 0.74);font-size: 12px;font-family: Verdana, Geneva, Tahoma, sans-serif;"> 
               bid must be greater than the highest bid ${{ listing.highest_bid }}
             </span> 
             <div style="padding: 12px 0 10px 0;" >
               <input style="width: 100%;padding: 5px;" class="form-control form-control-sm" type="number" name="amount" min="{{ min_bid }}"  placeholder="{{ listing.highest_bid }}" value="{{ listing.highest_bid }}" step=".1" oninput="setTwoNumberDecimal">              
             </div> 
-            {% elif listing.Winner ==  None %}
+            {% elif winner ==  None %}
             <span  style="color: rgba(75, 84, 94, 0.74);font-size: 12px;font-family: Verdana, Geneva, Tahoma, sans-serif;"> 
               bid must be greater than the highest bid ${{ listing.starting_bid }}
             </span>
@@ -223,10 +223,10 @@
         <div class="row1">
             <div class="card-body" > 
               <h4 style="padding-bottom: 20px;font-size: x-large;" class="card-title"> {{ listing.title }}</h4>
-              <div class="card-text">Seller: <code>@{{ listing.seller }}</code> </div>
-              {% if listing.Winner !=  None %}
+              <div class="card-text">Seller: <code>@{{ seller }}</code> </div>
+              {% if winnerr !=  None %}
                   <div class="card-text">Current price:<strong>  ${{ listing.highest_bid }}</strong></div> 
-              {% elif listing.Winner ==  None %}
+              {% elif winner ==  None %}
                   <div class="card-text">Current price:<strong>  ${{ listing.starting_bid }}</strong></div> 
               {% endif %}
 
