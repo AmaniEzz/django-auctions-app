@@ -11,7 +11,7 @@ Inside project's root folder, I have two apps ([auctions](https://github.com/Ama
 
 
 ### Visit webiste here ---> [https://djangoauctionapp.herokuapp.com/](https://djangoauctionapp.herokuapp.com/)
-
+### Or see a live Demo video on [Youtube](https://www.youtube.com/watch?v=61lkNZD7zX4)
 ------------------------------------------------------------------------------------------
 
 # Website Functionalities
@@ -79,12 +79,14 @@ so far, and demonstrating my skills.
 # Technology stack
 
 ### Django 3.0.3
+### Django REST Framwork
+### Heroku
+     created Heroku Postgres database add on, then exported it to a local postgres database.
+### PostgreSQL
 ### HTML5/CSS
 ### Bootstrap 4
-### Django REST Framwork
-### Heroku deployment
-### Heroku PostgreSQL add on
-### PostgreSQL database
+
+
 
 
 
@@ -96,3 +98,4 @@ so far, and demonstrating my skills.
 - [How to Build an API in Python with Django and deploy it on Heroku](https://rapidapi.com/blog/python-django-rest-api-tutorial/)
 - [how to deploy a Django app with Postgres database on Heroku](https://medium.com/@hdsingh13/deploying-django-app-on-heroku-with-postgres-as-backend-b2f3194e8a43)
 - [How to Deploy a Django Application to Heroku with Git CLI](https://stackabuse.com/how-to-deploy-a-django-application-to-heroku-with-git-cli/)
+- [Importing and Exporting Heroku Postgres Databases](https://devcenter.heroku.com/articles/heroku-postgres-import-export)
