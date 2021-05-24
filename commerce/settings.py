@@ -72,9 +72,11 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'commerce.urls'
 REST_FRAMEWORK = { 'FILTER_BACKEND': 'rest_framework.filters.DjangoFilterBackend', 
                    'DEFAULT_AUTHENTICATION_CLASSES': [
-                        'rest_framework.authentication.TokenAuthentication',  # <-- And here
-                    ],
+                   'rest_framework.authentication.TokenAuthentication'],
+                   #'DEFAULT_PAGINATION_CLASS': 'apps.core.pagination.ItemsPagination',                
                 } 
+
+  
 
 TEMPLATES = [
     {

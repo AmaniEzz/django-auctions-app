@@ -1,20 +1,35 @@
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.generics import ListAPIView, RetrieveAPIView, ListAPIView
 from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
 from rest_framework import status
 from rest_framework import serializers, viewsets, routers
 from rest_framework import permissions
-from auctions.models import Listings, Bid, Comment, Watchlist, Categories
-from .serializers import ListingsSerializer, CategoriesSerializer, CommentSerializer, BidsSerializer, WatchListSerializer
+from auctions.models import Listings, Bid, Comment, Watchlist, Categories, User
+from .serializers import ListingsSerializer, CategoriesSerializer,UserSerializer, CommentSerializer, BidsSerializer, WatchListSerializer
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import SearchFilter
+from rest_framework.pagination import PageNumberPagination
 from rest_framework import generics
 from rest_framework.views import APIView
 
 ################################################### All GET methods ##############################################
 
+
+class ItemsPagination(PageNumberPagination):
+    page_size = 1
+    page_size_query_param = 'page_size'
+    max_page_size = 10
+
+class UsersView(generics.ListAPIView):
+    """
+    API endpoint that allows all Listings to be viewed or create a new listing.
+    """
+
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 class ListingsView(generics.ListCreateAPIView):
     """
@@ -26,7 +41,9 @@ class ListingsView(generics.ListCreateAPIView):
 
     # Filter listing by the it's id, active state or seller__username (eg. "/api/listing/?active=false")
     filter_fields = ['active', 'seller__username', 'id']
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    search_fields = ['title', 'description']
+    pagination_class = ItemsPagination
 
 
 class ListingDetailsView(APIView):
@@ -34,6 +51,9 @@ class ListingDetailsView(APIView):
     """
     API endpointa that retrieve, update, edit or delete a lisitng object with given id.
     """
+    queryset = Listings.objects.all()
+    serializer_class = ListingsSerializer
+
 
     def get_object(self, listing_id):
 
@@ -72,7 +92,7 @@ class ListingDetailsView(APIView):
                 status=status.HTTP_400_BAD_REQUEST)
 
         data = JSONParser().parse(request)
-        listings_serializer = ListingsSerializer(instance = listing_instance, data=data, partial = True)
+        listings_serializer = ListingsSerializer(instance =listing_instance, data=data, partial = True)
         if listings_serializer.is_valid():
             listings_serializer.save()
             return Response(listings_serializer.data, status=status.HTTP_200_OK)
@@ -149,11 +169,13 @@ class ListBidsview(ListAPIView):
 class WatchListsView(ListAPIView):
 
     """
-    API endpoint that lists all Watchlists , you can filter by listing id to see which user has this listing in their watchlist, or you can filter by the username of watchlists's owner
+    API endpoint that lists all Watchlists ,
+    you can filter by listing id to see which user has this listing in their watchlist,
+    or you can filter by the username of watchlists's owner
     """
     queryset = Watchlist.objects.all()
     serializer_class = WatchListSerializer
-    filter_fields = ['user__username', 'listing__id']
+    filter_fields = ['user__username', 'id']
     filter_backends = [DjangoFilterBackend]
     
 

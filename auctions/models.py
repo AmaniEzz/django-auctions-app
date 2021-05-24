@@ -52,7 +52,7 @@ class Listings(models.Model):
     def update_price(self, bid_value):
         self.highest_bid = bid_value
 
-    def close(self):
+    def end(self):
         self.active = False
     
     def reopen(self):
@@ -65,8 +65,7 @@ class Listings(models.Model):
         return self.Winner
         
     def get_seller(self):
-        return self.seller
-    
+        return self.seller    
 
 # Table bid, stores all info related to a bid
 class Bid(models.Model):
@@ -83,7 +82,7 @@ class Bid(models.Model):
 class Watchlist(models.Model):
     user      = models.ForeignKey(User, on_delete=models.CASCADE)
     listing   = models.ManyToManyField(Listings, blank=True, related_name="user_fav")
-
+    
     def __str__(self):
        return f"{self.user}'s WatchList"
 
@@ -94,3 +93,6 @@ class Watchlist(models.Model):
             if item.active:
                 list.append(item)
         return list
+    
+    def get_count(self):
+        return len(self.listing.all())

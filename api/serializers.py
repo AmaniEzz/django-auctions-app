@@ -3,21 +3,26 @@ from auctions.models import User, Listings, Bid, Comment, Watchlist, Categories
 import django_filters
 
 
+
 class UserSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = User
         fields = ('username',)
 
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        if instance.is_superuser:
+            representation['admin'] = True
+        return representation
+
 
 class CommentSerializer(serializers.ModelSerializer):
+    commenter = serializers.StringRelatedField(read_only=True)
+
     class Meta:
         model = Comment
         fields = "__all__"
-
-    def to_representation(self, instance):
-        rep = super().to_representation(instance)
-        rep['commenter'] = UserSerializer(instance.commenter).data
-        return rep
 
 
 class CategoriesSerializer(serializers.ModelSerializer):
@@ -27,42 +32,38 @@ class CategoriesSerializer(serializers.ModelSerializer):
 
 
 class ListingsSerializer(serializers.ModelSerializer):
+    seller = serializers.StringRelatedField(read_only=True)
+    Winner = serializers.StringRelatedField()
+    comment = serializers.StringRelatedField(many=True)
+    category = serializers.StringRelatedField()
 
     class Meta:
         model = Listings
         fields = "__all__"
 
-    def to_representation(self, instance):
-        rep = super().to_representation(instance)
-        rep['seller'] = UserSerializer(instance.seller).data
-        rep["Winner"] = UserSerializer(instance.Winner).data
-        rep['comment'] = CommentSerializer(instance.comment.all(), many=True).data
-        rep['category'] = CategoriesSerializer(instance.category).data
-        return rep
 
 
 class BidsSerializer(serializers.ModelSerializer):
+    bidder = serializers.StringRelatedField(read_only=True)
+    listingid = serializers.StringRelatedField(read_only=True)
+
     class Meta:
         model = Bid
         fields = "__all__"
-
-    def to_representation(self, instance):
-        rep = super().to_representation(instance)
-        rep['bidder'] = UserSerializer(instance.bidder).data
-        rep['listingid'] = ListingsSerializer(instance.listingid).data["title"]
-        return rep
         
 
-
 class WatchListSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField(read_only=True)
+    count = serializers.IntegerField(source='get_count')
+    listing = serializers.SerializerMethodField()
 
     class Meta:
         model = Watchlist
         fields = "__all__"
 
-    def to_representation(self, instance):
-        rep = super().to_representation(instance)
-        rep['user'] = UserSerializer(instance.user).data
-        rep['listing'] = ListingsSerializer(instance.listing.all(), many=True).data
-        return rep
-        
+    def get_listing(self, obj):
+        listings = obj.listing.all()
+        if not listings:
+            return None
+        return ListingsSerializer(listings, many=True).data
+

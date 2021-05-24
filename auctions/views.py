@@ -14,18 +14,25 @@ from django.contrib.messages import add_message, ERROR,SUCCESS
 from .cart import Cart
 from decimal import Decimal
 
+
 #############################################################################################################
 
 def index(request):
     context = {"Listings": Listings.objects.all().order_by('-created_at'),
                "user": request.user,
+               "win_count": len(Listings.objects.filter(Winner=request.user, active=False)),
+               "count" : (Watchlist.objects.get(user=request.user)).get_count(),
                "header": "Home"}
+
     return render(request, "auctions/index.html", context = context )   
 
 def active_listing(request):
     context = {"Listings": Listings.objects.filter(active=True),
                "user": request.user,
-               "header": "Active listings"}
+               "header": "Active listings",
+               "win_count": len(Listings.objects.filter(Winner=request.user, active=False)),
+               "count" : (Watchlist.objects.get(user=request.user)).get_count(),
+               }
     return render(request, "auctions/index.html", context = context )
 
 #############################################################################################################
@@ -92,7 +99,10 @@ def listingpage(request, listing_id):
                "bids": Bid.objects.filter(listingid=listing_id),
                "comment_list": (item.comment).all(),
                "min_starting_bid": (item.starting_bid)+Decimal(0.1) ,
-               "min_bid": (item.highest_bid)+Decimal(0.1) }
+               "min_bid": (item.highest_bid)+Decimal(0.1),
+               "win_count": len(Listings.objects.filter(Winner=request.user, active=False)),
+               "count" : (Watchlist.objects.get(user=request.user)).get_count(),
+                }
     return render(request, "auctions/listing.html", context = context )   
 
 class CreateListing(LoginRequiredMixin, CreateView):
@@ -108,15 +118,29 @@ class CreateListing(LoginRequiredMixin, CreateView):
 #############################################################################################################
 def all_categories(request):
     categories = Categories.objects.all()
-    return render(request, "auctions/categories.html", context= {"categories" :categories})
+    context = {"categories" : categories,
+               "win_count": len(Listings.objects.filter(Winner=request.user, active=False)),
+               "count" : (Watchlist.objects.get(user=request.user)).get_count(),
+    }
+    return render(request, "auctions/categories.html", context = context)
 
 def category_active_list(request, name):
     cat_type    = Categories.objects.get(category_name=name)
     cat_listing = Listings.objects.filter(category=cat_type, active=True)
+
+    context = {"Listings" :cat_listing,
+              "win_count": len(Listings.objects.filter(Winner=request.user, active=False)),
+              "count" : (Watchlist.objects.get(user=request.user)).get_count(),
+    }
     if cat_listing:
-        return render(request, "auctions/index.html", context= {"Listings" :cat_listing } )
+        return render(request, "auctions/index.html", context = context )
     else:
-        return render(request, "auctions/errors.html", {"message": "Sorry, This Category has no active listings at the moment!"}) 
+        
+        context = {"message": "Sorry, This Category has no active listings at the moment!",
+                   "win_count": len(Listings.objects.filter(Winner=request.user, active=False)),
+                   "count" : (Watchlist.objects.get(user=request.user)).get_count(),
+        }
+        return render(request, "auctions/errors.html", context = context) 
 
 #############################################################################################################
 @login_required     
@@ -165,6 +189,8 @@ def watchlist_page(request):
             user_items = user_watchlist.active_items()
                 
             context = {"user_items":user_items,
+                       "count": user_watchlist.get_count(),
+                      "win_count": len(Listings.objects.filter(Winner=request.user, active=False)),
             }
 
             if user_watchlist:
@@ -199,11 +225,15 @@ def Winlist(request):
     if Listings.objects.filter(Winner=request.user, active=False):
         user_winlist = Listings.objects.filter(Winner=request.user, active=False)
         print(Listings.objects.filter(Winner=request.user))
+
         context = {"user_winlist": user_winlist,
+                   "win_count": len(user_winlist),
+                   "count" : (Watchlist.objects.get(user=request.user)).get_count(),   
         }
         return render(request, 'auctions/winlist.html', context=context)
     else:
-        return render(request, 'auctions/winlist.html', context = {"message": 'Your winlist is empty!'} )   
+        return render(request, 'auctions/winlist.html', context = {"message": 'Your winlist is empty!',
+                                                                   "count" : (Watchlist.objects.get(user=request.user)).get_count()} )   
 
 #############################################################################################################
 @login_required
@@ -239,8 +269,11 @@ def cart_clear(request):
 
 @login_required(login_url="/users/login")
 def cart_detail(request):
-    return render(request, 'auctions/cart_detail.html')
+    context = {"win_count": len(Listings.objects.filter(Winner=request.user, active=False)),
+               "count" : (Watchlist.objects.get(user=request.user)).get_count(),   
+        }
 
+    return render(request, 'auctions/cart_detail.html', context=context)
 
 @login_required
 def close_auction(request, listing_id):
@@ -251,8 +284,8 @@ def close_auction(request, listing_id):
     # Remove item from winner's watchlist if exists
     if Watchlist.objects.filter(user=request.user, listing=listing_id).exists():
             watchlist = Watchlist(user=item.Winner)
-            item_todelet = get_object_or_404(Watchlist, listing=listing_id)
-            watchlist.listing.remove(item_todelet)
+            item_to_delete = get_object_or_404(Watchlist, listing=listing_id)
+            watchlist.listing.remove(item_to_delete)
 
 
     return HttpResponseRedirect(reverse('listingpage', args=[listing_id]))
