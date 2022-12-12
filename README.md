@@ -5,13 +5,7 @@ An eBay-like e-commerce auction site that will allow users to post auction listi
 comment on those listings, and add listings to a “watchlist.”
 ```
 
-
-Inside project's root folder, I have two apps ([auctions](https://github.com/AmaniEzz/django-auctions-app/tree/master/auctions) app) and ( [api](https://github.com/AmaniEzz/django-auctions-app/tree/master/api) app).
-
-
-
-
-### Or see a live Demo video on [Youtube](https://www.youtube.com/watch?v=61lkNZD7zX4)
+### see a live Demo video on [Youtube](https://www.youtube.com/watch?v=61lkNZD7zX4)
 ------------------------------------------------------------------------------------------
 
 # Website Functionalities
@@ -57,12 +51,6 @@ Inside project's root folder, I have two apps ([auctions](https://github.com/Ama
 
 # API 
 
-```
-I implemented this RESTful API, for consuming by javascript front-end frameworks such as (Angular, React or Vue) in the future.
-I haven't secured the API at this point, because this project is not a real word project, it's for applying what I have learned 
-so far, and demonstrating my skills.
-```
-
 | Method                        | URL                   | Action
 | ----------------------------- |:------------------- |:------------------------------------------------------------------------------------|
 | `GET`, `POST`| `/api/lisitngs/` | create or read a list of Listings
@@ -81,21 +69,7 @@ so far, and demonstrating my skills.
 ### Django 3.0.3
 ### Django REST Framwork
 ### Heroku
-     created Heroku Postgres database add on, then exported it to a local postgres database.
 ### PostgreSQL
 ### HTML5/CSS
 ### Bootstrap 4
-
-
-
-
-
 ---
-
-## Resources:
-- [Django REST framwork](https://www.django-rest-framework.org/)
-- [Django REST framework: Build an API in 15 minutes](https://blog.logrocket.com/django-rest-framework-build-an-api-in-15-minutes/)
-- [How to Build an API in Python with Django and deploy it on Heroku](https://rapidapi.com/blog/python-django-rest-api-tutorial/)
-- [how to deploy a Django app with Postgres database on Heroku](https://medium.com/@hdsingh13/deploying-django-app-on-heroku-with-postgres-as-backend-b2f3194e8a43)
-- [How to Deploy a Django Application to Heroku with Git CLI](https://stackabuse.com/how-to-deploy-a-django-application-to-heroku-with-git-cli/)
-- [Importing and Exporting Heroku Postgres Databases](https://devcenter.heroku.com/articles/heroku-postgres-import-export)
