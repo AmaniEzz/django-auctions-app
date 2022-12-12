@@ -10,7 +10,7 @@ Inside project's root folder, I have two apps ([auctions](https://github.com/Ama
 
 
 
-### Visit webiste here ---> [https://djangoauctionapp.herokuapp.com/](https://djangoauctionapp.herokuapp.com/)
+
 ### Or see a live Demo video on [Youtube](https://www.youtube.com/watch?v=61lkNZD7zX4)
 ------------------------------------------------------------------------------------------
 
